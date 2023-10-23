@@ -1,7 +1,7 @@
 ---
 title: Hybrid signatures schemes
 abbrev: ietf-pquip-hybrid-signature-spectrums
-docname: draft-ietf-pquip-hybrid-signature-spectrums-latest
+docname: draft-connolly-pquip-hybrid-signature-spectrums-latest
 date: 2023-10-23
 category: info
 
