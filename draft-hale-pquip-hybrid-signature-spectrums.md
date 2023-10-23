@@ -1,11 +1,11 @@
 ---
-title: Hybrid signatures schemes
-abbrev: ietf-pquip-hybrid-signature-spectrums
-docname: draft-connolly-pquip-hybrid-signature-spectrums-latest
+title: Hybrid signature spectrums
+abbrev: hale-pquip-hybrid-spectrums
+docname: draft-hale-pquip-hybrid-signature-spectrums-latest
 date: 2023-10-23
 category: info
 
-ipr: none
+ipr: trust200902
 keyword: Internet-Draft
 
 stand_alone: yes
@@ -112,7 +112,7 @@ informative:
         name: Michele Mosca
     date: 2007-11
 
-    NIST_PQC_FAQ:
+  NIST_PQC_FAQ:
     target: https://csrc.nist.gov/Projects/post-quantum-cryptography/faqs
     title: Post-Quantum Cryptography FAQs
     author:
@@ -125,14 +125,12 @@ informative:
 --- abstract
 
 This document describes classification of design goals and security considerations
-for hybrid digital signature schemes, including proof composability (that the
-security of the hybrid signature scheme can easily be reduced to the ingredient
-algorithms), non-separability of the ingredient signatures given a hybrid signature,
+for hybrid digital signature schemes, including proof composability, non-separability of the ingredient signatures given a hybrid signature,
 backwards/forwards compatiblity, hybrid generality, and simultaneous verification.
 
 Discussion of this work is encouraged to happen on the IETF PQUIP mailing list
 pqc@ietf.org or on the GitHub repository which contains the draft:
-https://github.com/dconnolly/draft-connolly-pquip-hybrid-signature-spectrums
+https://github.com/dconnolly/draft-hale-pquip-hybrid-signature-spectrums
 
 --- middle
 
@@ -149,43 +147,19 @@ acknowledgements!!
 - double-check and extend/refer to Florence' draft
 
 > I left statements from Douglas' hybrid KEM draft in, because we might want to pull from them
-
-> FD: Possible useful mailing list references:
-> https://mailarchive.ietf.org/arch/msg/secdispatch/2Q6aYKi2u0ope-YHcRs684GBng8/
-> https://mailarchive.ietf.org/arch/msg/secdispatch/IyYOal5zrGe7yXvGAD_PUh1jGtI/
-> https://mailarchive.ietf.org/arch/msg/spasm/fFwsL1hJ3TLksmz_IbSYvaY8P7A/
-> https://mailarchive.ietf.org/arch/msg/spasm/dVf00_AW0VxDSxmoKPnxbfbFQqU/
-> https://mailarchive.ietf.org/arch/msg/spasm/C6ZD6WTgQXfsJTa46ruLGUvEdQc/
-> I propose we just write what we want to write and then come back to the mailing lists to check
-> we're capturing major points.
 -->
 
 # Introduction {#introduction}
-
-> NB: Adapt a bit more to signatures (mention scalability issue), discuss and adapt notion:
-> post-quantum vs next-generation, dowgrading vs stripping attack etc
-
 Initial focus on the transition to use of post-quantum algorithms in protocols has
 largely been on confidentiality, given the potential risk of store and decrypt
 attacks, where data encrypted today using traditional algorithms could be
-decrypted in the future by an attacker with a Cryptographically Relevant Quantum
+decrypted in the future by an attacker with a Cryptographically-Relevant Quantum
 Computer (CRQC). While traditional authentication is only at risk once a CRQC
 exists, it is important to consider the transition to post-quantum authentication
 before this point.  This is particularly relevant for systems where algorithm
 turn-over is complex or takes a long time (e.g., long-lived systems with hardware
 roots of trust), or where future checks on past authenticity play a role (e.g.,
 digital signatures on legal documents).
-
-Initial focus on the transition to use of post-quantum algorithms in protocols has
-largely been on confidentiality, given the potential risk of store and decrypt
-attacks, where data encrypted today using traditional algorithms could be decrypted
-in the future by an attacker with a Cryptographically-Relevant Quantum Computer (CRQC).
-While traditional authentication is only at risk once a CRQC exists, it is
-important to consider the transition to post-quantum authentication before this
-point.  This is particularly relevant for systems where algorithm turn-over is complex
-or takes a long time (e.g., long-lived systems with hardware roots of trust), or
-where future checks on past authenticity play a role (e.g., digital signatures
-on legal documents).
 
 One approach to designing quantum-resistant protocols, particularly during the
 transition period from traditional to post-quantum algorithms, is incorporating
@@ -232,7 +206,7 @@ definition of 'certificate' to mean 'public-key certificate' as defined in [RFC4
 
 - 'Hybrid signature scheme':  Following [I-D.ietf-pquip-pqt-hybrid-terminology], we define a hybrid
   signature scheme to be "a multi-algorithm digital signature scheme made up of two or more component
-  digital signature algorithms [...]". We require that the security of the component schemes is based
+  digital signature algorithms ...". We require that the security of the component schemes is based
   on the hardness of different cryptographic assumptions. In contrast to [I-D.ietf-pquip-pqt-hybrid-terminology],
   we will use the more general term 'hybrid signature scheme' instead of requiring one
   post-quantum and one traditional algorithm (i.e., PQ/T hybrid signature schemes) to allow also the
@@ -252,7 +226,7 @@ definition of 'certificate' to mean 'public-key certificate' as defined in [RFC4
   [I-D.ietf-tls-hybrid-design], we opt to use the more generic term "next-generation" and "traditional"
   algorithm instead of "post-quantum" and "classical" algorithms.
 
-- 'Artifact':  An artifact is evidence of sender intent to hybridize a signature that remains even if a component algorithm tag is removed. Artifacts can be e.g., at the algorithmic level (within the digital signature), or at the protocol level (within the message or certificate). Artifacts should be easily identifiable by the receiver in the case of signature stripping.
+- 'Artifact':  An artifact is evidence of the sender's intent to hybridize a signature that remains even if a component algorithm tag is removed. Artifacts can be e.g., at the algorithmic level (e.g., within the digital signature), or at the protocol level (e.g., within the certificate), or on the system policy level (e.g., within the message). Artifacts should be easily identifiable by the receiver in the case of signature stripping.
 
 
 ## Motivation for use of hybrid signature schemes {#motivation}
@@ -269,8 +243,8 @@ mistakes and revision of parameters compared to traditional algorithms, such as 
 explain, yet during its existence and use there have been multiple attacks and refinements, such as
 adding requirements to how padding and keys are chosen, and implementation issues such as cross-protocol
 attacks. Thus, even in a relatively simple algorithm subtleties and caveats on implementation and
-use can arise over time. Given the complexity of next generation algorithms, such discoveries and
-caveats are likely.
+use can arise over time. Given the complexity of next generation algorithms, the chance of such discoveries and
+caveats needs to be taken into account.
 
 Of note, next generation algorithms have been heavily vetted. Thus, if and when further information
 on caveats and implementation issues come to light, it is less likely that a "break" will be
@@ -311,7 +285,7 @@ time (such as in long-lived systems with hardware deployment),
 meaning that an algorithm may be
 committed to long-term, with no option for replacement. Long-term
 committment creates further urgency for immediate next-generation algorithm selection.
-Additionally, for some sectors furture checks on past authenticity plays a role (e.g., many
+Additionally, for some sectors future checks on past authenticity plays a role (e.g., many
 legal, financial, auditing, and governmental systems).
 The 'store-now-modify-later' analogy would present challenges in such sectors, where future
 analysis of past authentication may be more critical
@@ -323,7 +297,7 @@ There are various security goals that can be achieved through hybridization. The
 summary of these goals, while also noting where security goals are in conflict, i.e., that achievement
 of one goal precludes another, such as backwards compatibility.
 
-**Unforgability.** One goal is security of hybrid signature schemes, in particular that
+**Unforgeability.** One goal is security of hybrid signature schemes, in particular that
 EUF-CMA security is maintained as long as at least one of the ingredient schemes is EUF-CMA secure.
 There might be, however, other goals in competition with this one, such as backward-compatibility,
 where the EUF-CMA seucurity of the hybrid signature relies solely on the security of one of the ingredient
@@ -566,9 +540,14 @@ the internal construct of the signature algorithm and its
 verification. In this type, the verifier is enabled to detect artifacts
 on an algorithmic level during verification. For example, the signature
 itself  encodes the information that a hybrid signature scheme is
-used. Examples of this type may be found in Algorithms 16/17 and 18/19
-of [HYBRIDSIGDESIGN], assuming a "loose" verification implementation where the
+used. Examples of this type may be found in [HYBRIDSIGDESIGN].
+
+<!--
+Algorithms 16/17 and 18/19
+of 
+, assuming a "loose" verification implementation where the
 verifier may skill a final bit comparison check.
+-->
 
 For schemes achieving the most demanding security notions, i.e., Strong
 Non-Separability with Simultaneous Verification, verification succeeds
@@ -582,42 +561,60 @@ is either a positive verification of a the full signature or a failure
 if the signature is not valid. For hybrid signatures, a `full signature`
 implies the hybridization of both component algorithms, and therefore the
 strongest non-separability notion enforces an all-or-nothing approach to
-verification. Algorithms 10/11, 12/13, 14/15, 16/17, 18/19, and 20/21 of
-[HYBRIDSIGDESIGN] are examples providing this type of security.
+verification. Examples of algorithms providing this type of security can be found in
+[HYBRIDSIGDESIGN].
 
+<!--
+Alg 10/11, 12/13, 14/15, 16/17, 18/19, and 20/21 of
+are examples providing this type of security.
+NB: Britta, I would leave out the concrete examples to avoid people focusing
+on discussing the concrete algorithms.
+-->
 
+## Artifact Locations Examplified {#artspectrum}
 
-# Artifact spectrum
+> NB: I am not done with the section
 
-Hybridization necessarily implies the presence of artifacts as evidence.
-Where such evidence resides differs, however. Some artifact locations have been
-mentioned above, but these are explicitly laid out here across three general
-categories of types of hybridization: concatenation, nesting, and true hybrid.
+Hybridization benefits from the presence of artifacts as evidence of the sender's intend to decrease the risk of successful stripping attacks. This, however, depends strongly on where such evidence resides (e.g., in the message, the dual signature, somewhere on the protocol level instead of the algorithmic level). In this section we exemplify the difference in non-separability guarantees depending on the artifact location for three types of hybridization, namly concatenation, nesting, and 'fused' hybrid explained next.
 
-Concatenation refers to variants of hybridization where, for component algorithms
+While the above discussion about the non-separability spectrum covers a spectrum of security guarantees and existence of artifacts are 
+linked to achieving those, this (sub-)section covers some specific examples of artifact 
+placement. This points to relevant decision considerations for implementors, namely 
+that if artifact placement is identical in two hybrid schemes, for example that 
+hybridization artifacts reside in the certificate, and if the above non-separability 
+guarantees are also the same for each scheme, then implementing the most performant 
+or least complex scheme maybe preferred.
+
+- Concatenation refers to variants of hybridization where, for component algorithms
 $\Sigma_1.Sign$ and $\Sigma_2.Sign$, the hybrid signature is calculated as a
 concatenation $(sig_1, sig_2)$ such that $sig_1 = \Sigma_1.Sign(hybridAlgID,m)$
-and $sig_2 = \Sigma_2.Sign(hybridAlgID,m)$. WNS may be a goal of a concatenation
-approach.
+and $sig_2 = \Sigma_2.Sign(hybridAlgID,m)$.
+<!--
+WNS may be a goal of a concatenation approach.
 
-Nesting refers to variants of hybridization where for component algorithms
+ NB: I took it out because I don't see a reason why there shouldn't been a policy or protocol artificat making concatenation SNS.
+-->
+
+- Nesting refers to variants of hybridization where for component algorithms
 $\Sigma_1.Sign$ and $\Sigma_2.Sign$, the hybrid signature is calculated in
-a layered approach as $(sig_1, sig_2)$ such that
-$sig_1 = \Sigma_1.Sign(hybridAlgID,m)$ and $sig_2 = \Sigma_2.Sign(hybridAlgID,(m, sig_1))$.
-WNS and potentially SNS (depending on prediction that $sig_1$ would be targeted
-in a stripping attack) may be goals of a nesting approach.
+a layered approach as $(sig_1, sig_2)$ such that, e.g., $sig_1 = \Sigma_1.Sign(hybridAlgID,m)$ and $sig_2 = \Sigma_2.Sign(hybridAlgID,(m, sig_1))$.
+<!--
+WNS and potentially SNS (depending on prediction that $sig_1$ would be targeted in a stripping attack) may be goals of a nesting approach.
+-->
 
-Fusion refers to variants of hybridization where for component algorithms
+- Fused hybrid refers to variants of hybridization where for component algorithms
 $\Sigma_1.Sign$ and $\Sigma_2.Sign$, the hybrid signature is calculated with
 entaglement to produce a single hybrid signature $sig_h$ without clear component
-constructs. SNS and potentially SV are goals of a fused hybrid approach.
+constructs.
 
-In addition to the natural artifact placement shown above for each category,
-the message $m$ in any of these categories may contain a label artifact, and/or
-the certificates for the public keys may contain such artifacts such as in
-[I-D.ounsworth-pq-composite-sigs].
-visualized in Fig. 2.
+<!--
+SNS and potentially SV are goals of a true hybrid approach.
+-->
 
+One artifact location im general could be in the message-to-be-signed, e.g., containing a label artifact. Depending on the hybrid type, this might be stripped away too, though. For example, a quantum attacker could strip away the quantum-secure signature of a concatenation dual signature, and (being able to forge, e.g., ECDSA signatures) remove the label artifact from the message as well. So, for many applications and threat models, adding an artificat in the message might not prevent stripping attacks.
+
+Another artifact location could be in the public key certificates as described in
+[I-D.ounsworth-pq-composite-sigs] and visualized in Fig. 2 where we list different artifact locations discussed in more detail below the figure. 
 
 | ---------------------------------------------- | ------------------------------------------------------ |  
 | Ref|   **Location of artifacts of hybrid intent**    |    **Category**                           
@@ -643,11 +640,15 @@ visualized in Fig. 2.
 |11 |In signature and message and cert                 | Label in message, public keys are in combined cert      
 | ---------------------------------------------- | ------------------------------------------------------ |  
 
-Fig. 2: Spectrum of artifacts
+Fig. 2: Artifact locations depending on the hybrid signature type
 
-Under a concatenation combiner, the artifacts and therefore validity of the message depends on
-the message itself unless keys are provisioned in a combined certificate (as in option
-cases 3 and 4). Option case 1 provides the weakest guarantees of hybrid identification,
+Under a concatenation combiner in option case 2, the artifacts lie within the message, and therefore validity of the message 
+>NB: what's validity of a message? do you mean signautre?
+>BH: No, I mean message. I.e. that pointing out that it is circular reasoning to base the validity of the message on the message...
+> I added more discussion
+
+depends on the message itself. Option cases 3 and 4 solve this circular dependancy by provisioning keys in a combined certificate. 
+Option case 1 provides the weakest guarantees of hybrid identification,
 as there are no prescribed artifacts.
 
 The artifact guarantees provided by a nesting combiner are similar to those provided by
@@ -663,10 +664,33 @@ within the signature. This can be coupled with artifacts in the message, such as
 through use of a label, and/or artifacts in the certificate if keys are also provisioned
 in a combined certificate.
 
+The above comparison shows similarities among some hybrid scheme choices, for insance option case 3 and 
+option case 6 both contain artifacts in the certificate. However, performance and correct implementation 
+of option case 3 and option case 6 may not be the same, illustrating possible decision points.
+
+Artifact placement should be further considered in terms of `levels`, as hinted at above. Levels in this sense 
+are more closely connected to networking levels, and should not be viewed as a form of hierarchical security. 
+Levels should be considered due to their role in the eventual security analysis; if the security of the hybrid scheme 
+is dependent on system policy, then cryptographic analysis must necessarily be reliant on specific policies and 
+it may not be possible to describe a scheme's security in a standalone sense. 
+
+
+| ---------------------------------------- | -------------------- |  
+|   **Location of artifacts of hybrid intent**       |    **Level**                                                          
+| ---------------------------------------- | -------------------- |  
+| Signature                                                     | Algorithm     
+| ---------------------------------------- | -------------------- |    
+| Certificate                                                   | Protocol   
+| ---------------------------------------- | -------------------- |    
+| Message                                                      | Policy     
+| ---------------------------------------- | -------------------- |    
+
+Fig. 3: Artifact placement levels.
+
 # EUF-CMA Challenges
 Under traditional signature scheme security assumptions such as EUF-CMA, the adversary
-`wins` the security experiment if it can produce a new message $m'$ that a message-signature
-pair $(m', sig)$ correctly verifies. This traditional security notion is challenged under
+`wins` the security experiment if it can produce a new message such that a message-signature pair $(m, sig)$ with it correctly verifies. 
+This traditional security notion is challenged under
 a hybrid construct.
 
 The most straightforward comparison would be for the adversary to attempt to produce a new
@@ -679,31 +703,31 @@ of traditional security analysis and represent considerations that would need to
 accounted for depending on the signature combiner method chosen.
 
 # Blackbox spectrum
+In practice, use of hybrid digital signatures relies on standards specifications where 
+applicable. This is particularly relevant in the case of FIPS approval considerations as 
+well as NIST, which has provided basic guidance 
+on hybrid signature use. NIST provides the following guidance (emphasis added),
+
+<!--
 > NB: instead Hybrid generality spectrum, as this is what we define as one of the goals
-On a practical notes, it is interesting to consider how entanglement
+On a practical note, it is interesting to consider how entanglement
 of two component schemes for the goal of creating a hybrid digital
 signature affects approved use. This includes NIST guidance and
-FIPS approval considerations. NIST provides the following guidance
-(emphasis added),
+FIPS approval considerations. 
+-->
 
-> how to do quotes in ascii??
-> https://kramdown.gettalong.org/syntax.html#blockquotes
-> begin quote
-    Assume that in a [hybrid] signature, \textit{one signature is
-    generated with a NIST-approved signature scheme as specified
-    in FIPS 186, while another signature(s) can be generated using
-    different schemes}, e.g., ones that are not currently specified
-    in NIST standards...`hybrid signatures` can be accommodated by
-    current standards in ``FIPS mode,`` as defined in FIPS 140,
-    provided at least one of the component methods is a properly
-    implemented}, NIST-approved signature algorithm. For the purposes
-    of FIPS 140 validation, any signature that is generated by a
-    non-approved component scheme would not be considered a security
-    function, since the NIST-approved component is regarded as
-    assuring the validity of the `hybrid` signature. [NISTPQC_faqs]
-> end quote}
-
->NB: Should we mention and discuss NIST and FIPS explictely?
+> Assume that in a [hybrid] signature, *one signature is
+> generated with a NIST-approved signature scheme as specified
+> in FIPS 186, while another signature(s) can be generated using
+> different schemes*, e.g., ones that are not currently specified
+> in NIST standards...*`hybrid signatures` can be accommodated by
+> current standards in ``FIPS mode,`` as defined in FIPS 140,
+> provided at least one of the component methods is a properly
+> implemented, NIST-approved signature algorithm*. For the purposes
+> of FIPS 140 validation, any signature that is generated by a
+> non-approved component scheme would not be considered a security
+> function, since the NIST-approved component is regarded as
+> assuring the validity of the `hybrid` signature. [NIST_PQC_FAQ]
 
 The emphasized text point to two things: 1) the signature scheme
 for one of the component hybrids must be approved and 2) that said
@@ -762,9 +786,14 @@ algorithm black box implementation approach.
 | individual, approved software modules                              
 | --------------------------------------------------------------------|  
 ▼  
-Fig. 3: Blackbox spectrum.
+Fig. 4: Blackbox spectrum.
 
 
+# Security Considerations {#security-considerations}
+
+This document discusses digital signature constructions that may be used in
+security protocols. It is an informational document and does not directly affect any other Internet draft. The security considerations for any specific 
+implementation or incorporation of a hybrid scheme should be discussed in the relevant specification documents.
 
 # Discussion of Advantages/Disadvantages
 
@@ -786,5 +815,3 @@ Serge Mister
 Max Pala  
 Mike Ounsworth   
 Douglas Stebila  
-
-# Related work {#related-work}
