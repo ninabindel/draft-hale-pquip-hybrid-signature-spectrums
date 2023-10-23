@@ -1,17 +1,17 @@
-# Hybrid signatures schemes
+# Hybrid signature schemes
 
-This is the working area for the individual Internet-Draft, "Hybrid signatures schemes".
+This is the working area for the individual Internet-Draft, "Hybrid signature schemes".
 
-* [Editor's Copy](https://dconnolly.github.io/draft-connolly-pquip-hybrid-signature-spectrums/#go.draft-connolly-pquip-hybrid-signature-spectrums.html)
-* [Datatracker Page](https://datatracker.ietf.org/doc/draft-connolly-pquip-hybrid-signature-spectrums)
-* [Individual Draft](https://datatracker.ietf.org/doc/html/draft-connolly-pquip-hybrid-signature-spectrums)
-* [Compare Editor's Copy to Individual Draft](https://dconnolly.github.io/draft-connolly-pquip-hybrid-signature-spectrums/#go.draft-connolly-pquip-hybrid-signature-spectrums.diff)
+* [Editor's Copy](https://dconnolly.github.io/draft-hale-pquip-hybrid-signature-spectrums/#go.draft-hale-pquip-hybrid-signature-spectrums.html)
+* [Datatracker Page](https://datatracker.ietf.org/doc/draft-hale-pquip-hybrid-signature-spectrums)
+* [Individual Draft](https://datatracker.ietf.org/doc/html/draft-hale-pquip-hybrid-signature-spectrums)
+* [Compare Editor's Copy to Individual Draft](https://dconnolly.github.io/draft-hale-pquip-hybrid-signature-spectrums/#go.draft-hale-pquip-hybrid-signature-spectrums.diff)
 
 
 ## Contributing
 
 See the
-[guidelines for contributions](https://github.com/dconnolly/draft-connolly-pquip-hybrid-signature-spectrums/blob/main/CONTRIBUTING.md).
+[guidelines for contributions](https://github.com/dconnolly/draft-hale-pquip-hybrid-signature-spectrums/blob/main/CONTRIBUTING.md).
 
 Contributions can be made by creating pull requests.
 The GitHub interface supports creating pull requests using the Edit (✏) button.
@@ -27,4 +27,3 @@ $ make
 
 Command line usage requires that you have the necessary software installed.  See
 [the instructions](https://github.com/martinthomson/i-d-template/blob/main/doc/SETUP.md).
-
