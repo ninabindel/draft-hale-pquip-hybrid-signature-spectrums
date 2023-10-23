@@ -675,17 +675,17 @@ is dependent on system policy, then cryptographic analysis must necessarily be r
 it may not be possible to describe a scheme's security in a standalone sense. 
 
 
-| ---------------------------------------- | -------------------- |  
-|   **Location of artifacts of hybrid intent**       |    **Level**                                                          
-| ---------------------------------------- | -------------------- |  
-| Signature                                                     | Algorithm     
-| ---------------------------------------- | -------------------- |    
-| Certificate                                                   | Protocol   
-| ---------------------------------------- | -------------------- |    
-| Message                                                      | Policy     
-| ---------------------------------------- | -------------------- |    
+| ---------------------------------------- | -------------------- |
+|   **Location of artifacts of hybrid intent**       |    **Level**
+| ---------------------------------------- | -------------------- |
+| Signature                                                     | Algorithm
+| ---------------------------------------- | -------------------- |
+| Certificate                                                   | Protocol
+| ---------------------------------------- | -------------------- |
+| Message                                                      | Policy
+| ---------------------------------------- | -------------------- |
+{: #tab-defined-groups title="Artifact placement levels."}
 
-Fig. 3: Artifact placement levels.
 
 # EUF-CMA Challenges
 Under traditional signature scheme security assumptions such as EUF-CMA, the adversary
@@ -768,25 +768,25 @@ full component black box implementation or event a both-component
 algorithm black box implementation approach.
 
 
-| --------------------------------------------------------------------|  
-| **Specification-Algorithmic Blackbox**  
-| Signature combiner supports one component algorithm                 
-| as an approved specification                                         
-| --------------------------------------------------------------------|     
-| **Algorithmic Blackbox**  
-| Signature combiner supports both component algorithms as   
-| approved specifications and hybrid scheme is not a "new" algorithm           
-| --------------------------------------------------------------------|   
-| **Software Blackbox**       
-| Signature combiner supports one component algorithm                 
-| as an approved software module                                      
-| --------------------------------------------------------------------|   
-| **Full Software Blackbox**     
-| Signature combiner supports both component algorithms as            
-| individual, approved software modules                              
-| --------------------------------------------------------------------|  
-▼  
-Fig. 4: Blackbox spectrum.
+| --------------------------------------------------------------------|
+| **Specification-Algorithmic Blackbox**
+| Signature combiner supports one component algorithm
+| as an approved specification
+| --------------------------------------------------------------------|
+| **Algorithmic Blackbox**
+| Signature combiner supports both component algorithms as
+| approved specifications and hybrid scheme is not a "new" algorithm
+| --------------------------------------------------------------------|
+| **Software Blackbox**
+| Signature combiner supports one component algorithm
+| as an approved software module
+| --------------------------------------------------------------------|
+| **Full Software Blackbox**
+| Signature combiner supports both component algorithms as
+| individual, approved software modules
+| --------------------------------------------------------------------|
+▼
+{: #tab-defined-groups title="Blackbox spectrum."}
 
 
 # Security Considerations {#security-considerations}
