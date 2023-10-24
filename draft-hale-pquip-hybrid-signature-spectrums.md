@@ -195,7 +195,7 @@ consistent language. We will make clear when this is not possible. In particular
 definition of 'post-quantum algorithm', 'traditional algorithms', and 'combiner'. Moreover, we use the
 definition of 'certificate' to mean 'public-key certificate' as defined in [RFC4949].
 
-- 'Signature scheme': A signature scheme is defined via the following three algorithms:
+- Signature scheme: A signature scheme is defined via the following three algorithms:
   - `KeyGen() -> (pk, sk)`: A probabilistic key generation algorithm, which generates a public
     verifying key `pk` and a secret signing key `sk`.
   - `Sign(sk, m) -> (sig)`: A probabilistic signature generation, which takes as input a secret
@@ -204,7 +204,7 @@ definition of 'certificate' to mean 'public-key certificate' as defined in [RFC4
     `pk`, a signature `sig` and a message `m`, and outputs a bit `b` indicating `accept` ($b=1$) or
     `reject` ($b=0$) of the signature for message `m`.
 
-- 'Hybrid signature scheme':  Following [I-D.ietf-pquip-pqt-hybrid-terminology], we define a hybrid
+- Hybrid signature scheme:  Following [I-D.ietf-pquip-pqt-hybrid-terminology], we define a hybrid
   signature scheme to be "a multi-algorithm digital signature scheme made up of two or more component
   digital signature algorithms ...". We require that the security of the component schemes is based
   on the hardness of different cryptographic assumptions. In contrast to [I-D.ietf-pquip-pqt-hybrid-terminology],
@@ -214,19 +214,19 @@ definition of 'certificate' to mean 'public-key certificate' as defined in [RFC4
   for 'hybrid scheme'. This is different from [I-D.ietf-pquip-pqt-hybrid-terminology] where the term is used
   at the protocol level.
 
-- 'Hybrid signature': A hybrid signature is the output of the hybrid signature scheme's signature
+- Hybrid signature: A hybrid signature is the output of the hybrid signature scheme's signature
   generation. As synonyms we might use 'composite signature' or 'dual signature'.  For example, NIST define a dual signature as "two or more signatures on a common message" [NIST_PQC_FAQ].
 
-- 'Component (signature) scheme': Component signature schemes are the cryptographic algorithms
+- Component (signature) scheme: Component signature schemes are the cryptographic algorithms
   contributing to the hybrid signature scheme. This has a similar purpose as in [I-D.ietf-pquip-pqt-hybrid-terminology].
   In this draft, we will use 'ingredient signature scheme' as a synonym.
 
-- 'Next-generation algorithms': Similarly to the case of hybrid KEMs [I-D.ietf-tls-hybrid-design],
+- Next-generation algorithms: Similarly to the case of hybrid KEMs [I-D.ietf-tls-hybrid-design],
   hybrid signatures are mostly motiviated as preparation for the post-quantum migration. Following
   [I-D.ietf-tls-hybrid-design], we opt to use the more generic term "next-generation" and "traditional"
   algorithm instead of "post-quantum" and "classical" algorithms.
 
-- 'Artifact':  An artifact is evidence of the sender's intent to hybridize a signature that remains even if a component algorithm tag is removed. Artifacts can be e.g., at the algorithmic level (e.g., within the digital signature), or at the protocol level (e.g., within the certificate), or on the system policy level (e.g., within the message). Artifacts should be easily identifiable by the receiver in the case of signature stripping.
+- Artifact:  An artifact is evidence of the sender's intent to hybridize a signature that remains even if a component algorithm tag is removed. Artifacts can be e.g., at the algorithmic level (e.g., within the digital signature), or at the protocol level (e.g., within the certificate), or on the system policy level (e.g., within the message). Artifacts should be easily identifiable by the receiver in the case of signature stripping.
 
 
 ## Motivation for use of hybrid signature schemes {#motivation}
@@ -297,13 +297,15 @@ There are various security goals that can be achieved through hybridization. The
 summary of these goals, while also noting where security goals are in conflict, i.e., that achievement
 of one goal precludes another, such as backwards compatibility.
 
-**Unforgeability.** One goal is security of hybrid signature schemes, in particular that
+### **Unforgeability**
+One goal is security of hybrid signature schemes, in particular that
 EUF-CMA security is maintained as long as at least one of the ingredient schemes is EUF-CMA secure.
 There might be, however, other goals in competition with this one, such as backward-compatibility,
 where the EUF-CMA seucurity of the hybrid signature relies solely on the security of one of the ingredient
 schemes instead of relying on both.
 
-**Proof Composability.** Under proof composability, the ingredient algorithms are combined
+### **Proof Composability.**
+Under proof composability, the ingredient algorithms are combined
 in such a way that it is possible to prove a security reduction from the security
 properties of hybrid signature scheme to the properties of the respective ingredient
 signature schemes and, potentially, other building blocks such as hash functions, KDF, etc.
@@ -313,7 +315,8 @@ date on ingredient algorithms. The resulting hybrid signature would be, in effec
 new algorithm of its own. The more two signature schemes are entangled, the more likely it is
 that an entirely new proof is required, thus not meeting proof composability.
 
-**Weak Non-Separability.** Non-Separability was one of the earliest
+### **Weak Non-Separability**
+Non-Separability was one of the earliest
 properties of hybrid digital signatures to be discussed [HYBRIDSIG]. It was
 defined as the guarantee that an adversary cannot simply “remove” one of the
 ingredient signatures without evidence left behind. For example there are artifacts
@@ -337,7 +340,8 @@ scheme to ensure this property. However, it places the responsibility of signatu
 validity not only on the correct format of the message, as in a traditional
 signature security guarantee, but the precise content thereof.
 
-**Strong Non-Separability.** Strong Non-Separability (SNS) is a stronger notion
+### **Strong Non-Separability**
+Strong Non-Separability (SNS) is a stronger notion
 of WNS, introduced in [HYBRIDSIGDESIGN]. SNS guarantees that an adversary cannot take
 as input a hybrid signature (and message) and output a valid ingredient signature
 (and potentially different message) that will verify correctly. In other words,
@@ -375,7 +379,8 @@ signature, namely definitions such EUF-CMA, we do not include them
 in the SNS category.
 -->
 
-**Backwards/Forwards Compatibility.** Backwards compatibility refers
+### **Backwards/Forwards Compatibility**
+Backwards compatibility refers
 to the property where a hybrid algorithm may also be used for legacy
 receivers that may take a hybrid signature and verify it as being
 valid using only the verification algorithm of one component scheme
@@ -405,7 +410,8 @@ efficiency reasons).
 As noted in [I-D.ietf-tls-hybrid-design], ideally, forward/backward
 compatibility is achieved using redundant information as little as possible.
 
-**Simultaneous Verification.** Simultaneous Verification (SV) builds on SNS and was
+### **Simultaneous Verification**
+Simultaneous Verification (SV) builds on SNS and was
 first introduced in [HYBRIDSIGDESIGN]. SV requires that not only are all ingredient
 signatures needed to achieve a successful verification present in the hybrid signature,
 but also that verification of both component algorithms occurs simultaneously. Namely,
@@ -448,7 +454,8 @@ options: 1) ignore the digital signatures or 2) verify the digital signatures
 addresses this property.
 -->
 
-**Hybrid Generality.** Hybrid generality means that a general signature combiner
+### **Hybrid Generality**
+Hybrid generality means that a general signature combiner
 is defined, based on inherent and common structures of component digital signatures
 "categories." For instance, since multiple signature schemes use a Fiat-Shamir
 Transform, a hybrid scheme based on the transform can be made that is generalizable
@@ -456,14 +463,15 @@ to all such signatures. Such generality can also result in simplified constructi
 where as more tailored hybrid variants might be more efficient in terms of sizes and
 performance.
 
-**High performance.** Similarly to performance goals noted for hybridization
+### **High performance**
+Similarly to performance goals noted for hybridization
 of other cryptographic components [I-D.ietf-tls-hybrid-design] hybrid signature
 constructions are expected to be as performant as possible. For most hybrid
 signatures this means that the computation time should only minimally exceed
 the sum of the component signature computation time. It is noted that performance
 of any variety may come at the cost of other properties, such as hybrid generality.
 
-**High space efficiency.**
+### **High space efficiency**
 Similarly to space considerations in [I-D.ietf-tls-hybrid-design], hybrid signature
 constructions are expected to be as space performant as possible. This includes messages
 (as they might increase if artifacts are used), public keys, and the hybrid signature.
@@ -471,7 +479,8 @@ For the hybrid signature, size should no more than minimally exceed the signatur
 size of the two component signatures. In some cases, it may be possible for a hybrid
 signature to even be smaller than two component signatures.
 
-**Minimal duplicate information.** Similarly to [I-D.ietf-tls-hybrid-design],
+### **Minimal duplicate information**
+Similarly to [I-D.ietf-tls-hybrid-design],
 duplicated information should be avoided when possible. This might concern
 repeated information in hybrid certificates or in the communication of component
 certificates in additional to hybrid certificates (for example to acheive
@@ -481,25 +490,27 @@ signatures of the same component algorithm.
 # Non-separability spectrum
 
 Non-separability is not a singular definition but rather is a scale,
-representing `degrees` of separability hardness, visualized in Fig. 1.
+representing `degrees` of separability hardness, visualized in {{fig-spectrum-non-separability}}.
 
-|-----------------------------------------------------------------------------|  
-|**No Non-Separability**                                                        
-| no artifacts exist                                                             
-|-----------------------------------------------------------------------------|    
-|**Weak Non-Separability**                                                      
-| artifacts exist in the message, signature, system, application, or protocol    
-| ----------------------------------------------------------------------------|    
-|**Strong Non-Separability**                                                    
-| artifacts exist in hybrid signature                                            
-| ----------------------------------------------------------------------------|    
-|**Strong Non-Separability w/ Simultaneous Verification**                         
-| artifacts exist in hybrid signature and verification or failure of both         
-| components occurs simultaneously                                              
-| ----------------------------------------------------------------------------|    
-▼  
 
-Fig. 1: Spectrum of non-separability from weakest to strongest.
+~~~
+|-----------------------------------------------------------------------------|
+|**No Non-Separability**
+| no artifacts exist
+|-----------------------------------------------------------------------------|
+|**Weak Non-Separability**
+| artifacts exist in the message, signature, system, application, or protocol
+| ----------------------------------------------------------------------------|
+|**Strong Non-Separability**
+| artifacts exist in hybrid signature
+| ----------------------------------------------------------------------------|
+|**Strong Non-Separability w/ Simultaneous Verification**
+| artifacts exist in hybrid signature and verification or failure of both
+| components occurs simultaneously
+| ----------------------------------------------------------------------------|
+▼
+~~~
+{: #fig-spectrum-non-separability title="Spectrum of non-separability from weakest to strongest."}
 
 
 At one end of the spectrum are schemes in which one of the ingredient
@@ -544,7 +555,7 @@ used. Examples of this type may be found in [HYBRIDSIGDESIGN].
 
 <!--
 Algorithms 16/17 and 18/19
-of 
+of
 , assuming a "loose" verification implementation where the
 verifier may skill a final bit comparison check.
 -->
@@ -571,27 +582,82 @@ NB: Britta, I would leave out the concrete examples to avoid people focusing
 on discussing the concrete algorithms.
 -->
 
-## Artifact Locations Examplified {#artspectrum}
+# Artifacts {#artspectrum}
 
-> NB: I am not done with the section
+Hybridization benefits from the presence of artifacts as evidence of the sender's intend to decrease the risk of
+successful stripping attacks. This, however, depends strongly on where such evidence resides (e.g., in the message,
+the signature, or somewhere on the protocol level instead of the algorithmic level). Even commonly discussed hybrid approaches,
+such as concatenation, are not inherently tied one type of security (e.g., WNS, SNS, etc.). This can lead to ambiguities
+when comparing different approaches and assumptions about approach security or lack thereof. Thus in this section we cover
+artifact locations and also walk
+through a highlevel comparison of a few hybrid approach categories to show how artifact location can differ within a given approach.
+Artifact location is tied to non-separability notions above; thus the selection of a given security guarantee and general
+hybrid approach must also include finer grained selection of artifact placement.
 
-Hybridization benefits from the presence of artifacts as evidence of the sender's intend to decrease the risk of successful stripping attacks. This, however, depends strongly on where such evidence resides (e.g., in the message, the dual signature, somewhere on the protocol level instead of the algorithmic level). In this section we exemplify the difference in non-separability guarantees depending on the artifact location for three types of hybridization, namly concatenation, nesting, and 'fused' hybrid explained next.
 
-While the above discussion about the non-separability spectrum covers a spectrum of security guarantees and existence of artifacts are 
-linked to achieving those, this (sub-)section covers some specific examples of artifact 
-placement. This points to relevant decision considerations for implementors, namely 
-that if artifact placement is identical in two hybrid schemes, for example that 
-hybridization artifacts reside in the certificate, and if the above non-separability 
-guarantees are also the same for each scheme, then implementing the most performant 
-or least complex scheme maybe preferred.
+<!--
+In this section we exemplify
+the difference in non-separability guarantees depending on the artifact location for three types of hybridization,
+namly concatenation, nesting, and 'fused' hybrid explained next.
+-->
+
+<!--
+While the above discussion about the non-separability spectrum covers a spectrum of security guarantees and existence of artifacts are
+linked to achieving those, this (sub-)section covers some specific examples of artifact
+placement.
+-->
+
+
+## Artifact locations
+There are a variety of artifact locations possible, ranging from within the signature algorithm
+itself to the protocol level and even into policy, as shown in {{tab-artifact-location}}
+For example, one artifact location could be in the message-to-be-signed, e.g., containing a label artifact.
+Depending on the hybrid type, this might be stripped away though. For example, a quantum attacker could
+strip away the quantum-secure signature of a concatenated dual signature, and (being able to forge, e.g.,
+ECDSA signatures) remove the label artifact from the message as well. So, for many applications and threat
+models, adding an artificat in the message might not prevent stripping attacks.
+Another artifact location could be in the public key certificates as described in
+[I-D.ounsworth-pq-composite-sigs]. In still yet another case, artifacts may be present through the fused hybrid
+method, thus making them part of the signature at the algorithmic level.
+
+Eventual security analysis may be a consideration in choosing between levels. For example, if the
+security of the hybrid scheme
+is dependent on system policy, then cryptographic analysis must necessarily be reliant on specific policies and
+it may not be possible to describe a scheme's security in a standalone sense.
+
+
+| ---------------------------------------- | -------------------- |
+|   **Location of artifacts of hybrid intent**       |    **Level**
+| ---------------------------------------- | -------------------- |
+| Signature                                                     | Algorithm
+| ---------------------------------------- | -------------------- |
+| Certificate                              |Protocol             |
+| Algorithm agreement / negotiation        |Protocol               |
+| ---------------------------------------- | -------------------- |
+| Message                                                      | Policy
+| ---------------------------------------- | -------------------- |
+{: #tab-artifact-location title="Artifact placement levels" }
+
+
+## Artifact Location Comparison Example {#artspectrumexample}
+
+Decisions on artifact locations present further considerations for implementors, namely
+that if artifact placement is identical in two hybrid schemes, for example that
+hybridization artifacts reside in the certificate in both cases, and if the above non-separability
+guarantees are also the same for each scheme, then implementing the most performant
+scheme maybe preferred. Thus it is advisable to not assume performance or
+lack thereof is inherent to a particular security goal selection.
+
+We briefly summarize our example hybrid approach categories (concatenation, nesting, and fusion) before showing how
+each one may have artifacts in different locations in {{tab-hybrid-approach-categories}}.
 
 - Concatenation refers to variants of hybridization where, for component algorithms
 $\Sigma_1.Sign$ and $\Sigma_2.Sign$, the hybrid signature is calculated as a
 concatenation $(sig_1, sig_2)$ such that $sig_1 = \Sigma_1.Sign(hybridAlgID,m)$
 and $sig_2 = \Sigma_2.Sign(hybridAlgID,m)$.
+
 <!--
 WNS may be a goal of a concatenation approach.
-
  NB: I took it out because I don't see a reason why there shouldn't been a policy or protocol artificat making concatenation SNS.
 -->
 
@@ -611,112 +677,65 @@ constructs.
 SNS and potentially SV are goals of a true hybrid approach.
 -->
 
-One artifact location im general could be in the message-to-be-signed, e.g., containing a label artifact. Depending on the hybrid type, this might be stripped away too, though. For example, a quantum attacker could strip away the quantum-secure signature of a concatenation dual signature, and (being able to forge, e.g., ECDSA signatures) remove the label artifact from the message as well. So, for many applications and threat models, adding an artificat in the message might not prevent stripping attacks.
 
-Another artifact location could be in the public key certificates as described in
-[I-D.ounsworth-pq-composite-sigs] and visualized in Fig. 2 where we list different artifact locations discussed in more detail below the figure. 
+| ---------------------------------------------- | ------------------------------------------------------ |
+| Ref|   **Location of artifacts of hybrid intent**    |    **Category**
+| ---------------------------------------------- | ------------------------------------------------------ |
+|                                                                                      **Concatenated**
+| ---------------------------------------------- | ------------------------------------------------------ |
+| 1 |None                                                                   | No label in message, public keys are in separate certs
+| 2 |In message                                                        | Label in message, public keys are in separate certs
+| 3 |In cert                                                                 | No label in message, public keys are in combined cert
+| 4 |In message and cert                                         | Label in message, public keys are in combined cert
+| ---------------------------------------------- | ------------------------------------------------------ |
+|                                                                                      **Nested**
+| ---------------------------------------------- | ------------------------------------------------------ |
+| 5 |In message                                                        | Label in message, public keys are in separate certs
+| 6 |In cert                                                                | No label in message, public keys are in combined cert
+| 7 |In message and cert                                         | Label in message, public keys are in combined cert
+| ---------------------------------------------- | ------------------------------------------------------ |
+|                                                                                     **Fused**
+| ---------------------------------------------- | ------------------------------------------------------ |
+| 8 |In signature                                                        | Public keys are in separate certs
+| 9 |In signature and message                                | Label in message, public keys are in separate certs
+|10 |In signature and cert                                        | Public keys are in combined cert
+|11 |In signature and message and cert                 | Label in message, public keys are in combined cert
+| ---------------------------------------------- | ------------------------------------------------------ |
+{: #tab-hybrid-approach-categories title="Artifact locations depending on the hybrid signature type"}
 
-| ---------------------------------------------- | ------------------------------------------------------ |  
-| Ref|   **Location of artifacts of hybrid intent**    |    **Category**                           
-| ---------------------------------------------- | ------------------------------------------------------ |  
-|                                                                                      **Concatenated**                                       
-| ---------------------------------------------- | ------------------------------------------------------ |  
-| 1 |None                                                                   | No label in message, public keys are in separate certs  
-| 2 |In message                                                        | Label in message, public keys are in separate certs     
-| 3 |In cert                                                                 | No label in message, public keys are in combined cert   
-| 4 |In message and cert                                         | Label in message, public keys are in combined cert      
-| ---------------------------------------------- | ------------------------------------------------------ |  
-|                                                                                      **Nested**                                            
-| ---------------------------------------------- | ------------------------------------------------------ |  
-| 5 |In message                                                        | Label in message, public keys are in separate certs     
-| 6 |In cert                                                                | No label in message, public keys are in combined cert   
-| 7 |In message and cert                                         | Label in message, public keys are in combined cert      
-| ---------------------------------------------- | ------------------------------------------------------ |  
-|                                                                                     **Fused**                                        
-| ---------------------------------------------- | ------------------------------------------------------ |  
-| 8 |In signature                                                        | Public keys are in separate certs                       
-| 9 |In signature and message                                | Label in message, public keys are in separate certs     
-|10 |In signature and cert                                        | Public keys are in combined cert                        
-|11 |In signature and message and cert                 | Label in message, public keys are in combined cert      
-| ---------------------------------------------- | ------------------------------------------------------ |  
 
-Fig. 2: Artifact locations depending on the hybrid signature type
-
-Under a concatenation combiner in option case 2, the artifacts lie within the message, and therefore validity of the message 
->NB: what's validity of a message? do you mean signautre?
->BH: No, I mean message. I.e. that pointing out that it is circular reasoning to base the validity of the message on the message...
-> I added more discussion
-
-depends on the message itself. Option cases 3 and 4 solve this circular dependancy by provisioning keys in a combined certificate. 
+Under a concatenation combiner in option case 2, the artifacts lie within the message. Thus, when the authenticity of 
+the message relies on the validity of the signature and the signature in turn relies on the authentic content of the message (the 
+artifact label) there is a risk of circular dependency. Option cases 3 and 4 solve this circular dependancy by provisioning keys in a combined certificate.
 Option case 1 provides the weakest guarantees of hybrid identification,
 as there are no prescribed artifacts.
 
-The artifact guarantees provided by a nesting combiner are similar to those provided by
+The artifact placements in nesting combiners may be surprisingly similar to those in
 concatenation option cases 2, 3, and 4. Namely, if
 $sig_2 = \Sigma_2.Sign(hybridAlgID,(m, sig_1))$, then the "message"
 $(m, sig_1)$ input into $\Sigma_2.Sign$ actually contains the artifact and acts as a label.
 Unless an additional label is provided within $m$ itself, $sig_1$ does not therefore contain
-an artifact. This presents an implementation challenge as it is necessary to guess which
-algorithm is more at risk for a stripping attack and choose the order of nesting accordingly.
+an artifact. Where the artifact is located is necessarily dependent upon the threat model; guessing which 
+algorithm is more at risk from a stripping attack and choosing the order of nesting accordingly may change the location 
+of an artifact. 
 
-Under a fused combiner, SNS also implies that artifacts of hybridization are present
+Under a fused combiner, artifacts of hybridization are present
 within the signature. This can be coupled with artifacts in the message, such as
 through use of a label, and/or artifacts in the certificate if keys are also provisioned
 in a combined certificate.
 
-The above comparison shows similarities among some hybrid scheme choices, for insance option case 3 and 
-option case 6 both contain artifacts in the certificate. However, performance and correct implementation 
+The above comparison shows similarities among some hybrid scheme choices, for insance option case 3 and
+option case 6 both contain artifacts in the certificate. However, performance and correct implementation
 of option case 3 and option case 6 may not be the same, illustrating possible decision points.
 
-Artifact placement should be further considered in terms of `levels`, as hinted at above. Levels in this sense 
-are more closely connected to networking levels, and should not be viewed as a form of hierarchical security. 
-Levels should be considered due to their role in the eventual security analysis; if the security of the hybrid scheme 
-is dependent on system policy, then cryptographic analysis must necessarily be reliant on specific policies and 
-it may not be possible to describe a scheme's security in a standalone sense. 
 
-
-| ---------------------------------------- | -------------------- |
-|   **Location of artifacts of hybrid intent**       |    **Level**
-| ---------------------------------------- | -------------------- |
-| Signature                                                     | Algorithm
-| ---------------------------------------- | -------------------- |
-| Certificate                                                   | Protocol
-| ---------------------------------------- | -------------------- |
-| Message                                                      | Policy
-| ---------------------------------------- | -------------------- |
-{: #tab-defined-groups title="Artifact placement levels."}
-
-
-# EUF-CMA Challenges
-Under traditional signature scheme security assumptions such as EUF-CMA, the adversary
-`wins` the security experiment if it can produce a new message such that a message-signature pair $(m, sig)$ with it correctly verifies. 
-This traditional security notion is challenged under
-a hybrid construct.
-
-The most straightforward comparison would be for the adversary to attempt to produce a new
-message $m'$ that a message-hybrid signature pair $(m', sig_h)$ correctly verifies.
-However, such a guarantee depends on the signature being strongly non-separable. Otherwise,
-in practical terms a security experiment must capture the case that an existing or new
-message $m$ could be verified with a component signature, e.g., to produce $(m', sig_1)$
-that correctly verifies under $\Sigma_1.Sign$. Such considerations are beyond the scope
-of traditional security analysis and represent considerations that would need to be
-accounted for depending on the signature combiner method chosen.
-
-# Blackbox spectrum
-In practice, use of hybrid digital signatures relies on standards specifications where 
-applicable. This is particularly relevant in the case of FIPS approval considerations as 
-well as NIST, which has provided basic guidance 
+# Need-For-Approval Spectrum
+In practice, use of hybrid digital signatures relies on standards specifications where
+applicable. This is particularly relevant in the case of FIPS approval considerations as
+well as NIST, which has provided basic guidance
 on hybrid signature use. NIST provides the following guidance (emphasis added),
 
-<!--
-> NB: instead Hybrid generality spectrum, as this is what we define as one of the goals
-On a practical note, it is interesting to consider how entanglement
-of two component schemes for the goal of creating a hybrid digital
-signature affects approved use. This includes NIST guidance and
-FIPS approval considerations. 
--->
-
-> Assume that in a [hybrid] signature, *one signature is
+> Assume that in a \[hybrid\] signature, *one signature is
 > generated with a NIST-approved signature scheme as specified
 > in FIPS 186, while another signature(s) can be generated using
 > different schemes*, e.g., ones that are not currently specified
@@ -729,11 +748,12 @@ FIPS approval considerations.
 > function, since the NIST-approved component is regarded as
 > assuring the validity of the `hybrid` signature. [NIST_PQC_FAQ]
 
-The emphasized text point to two things: 1) the signature scheme
+<!--
+The emphasized texts point to two things: 1) the signature scheme
 for one of the component hybrids must be approved and 2) that said
 algorithm must be properly implemented. This leaves some ambiguity
 as to whether only the algorithm must be approved and well implemented,
-or if that implementation must go through an approvals process as well.
+or if that implementation must go through an approval process as well.
 As such, there is a ``black box scale`` that developers may consider
 as to whether they are using at least one approved component algorithm
 (``black box algorithm``), or whether the implementation of that
@@ -743,57 +763,77 @@ would suggest a straightforward path for FIPS-140 approvals based
 on the NIST guidelines; however, it is not inconceivable that using
 a `black box implementation` could automate much of the certification
 review and therefore be attractive to developers.
-
-We provide a scale for the different nuances of black box properties,
-together with  respective example constructions. In addition the
-`black box algorithm` options (represented as the 1 or 2 approved
-FIPS Algorithm box in blue) and the `black box implementation` options
-(represented as the 1-approved and 2-approved fIPS implementation
-alternatives in blue), we also include a 0-approved hybrid approach
-for completeness of scale. This aligns to brand new signature algorithms
-that are reducible to hybrid hardness assumptions but require
-e.g., fresh NIST approval.
-
-> build figure in Ascii and include it here with references to it
-
-We align Alg. 10/11, 18/19, and 20/21 from this paper to the
-`black box algorithm` interpretation. However, it is worth noting
-that the algorithmic modifications to either the standard or
-post-quantum component algorithms in these cases are minor (such as
-the inclusion if extra information in a hash). Since an addition,
-however minor, to an implementation implies that the implementation
-is not black box, we show these alignments conservatively. The
-remaining algorithms we provide in this paper align to either a
-full component black box implementation or event a both-component
-algorithm black box implementation approach.
+>Nb: I would introdcued this level of detaila nd open the discussion about the implementation approval. That is not the point IMO, it's more about how general the constructions should be
+-->
 
 
+We provide a scale for the different nuances of generality of the hybrid combiners. This is related to whether the resulting combiner needs a new approval process or falls under already approved specifications.
+together with respective example constructions.
+
+~~~~
 | --------------------------------------------------------------------|
-| **Specification-Algorithmic Blackbox**
-| Signature combiner supports one component algorithm
-| as an approved specification
+| **New Algorithm**
+| New signature scheme base on different hardness assumptions
+| Separate approval needed
 | --------------------------------------------------------------------|
-| **Algorithmic Blackbox**
-| Signature combiner supports both component algorithms as
-| approved specifications and hybrid scheme is not a "new" algorithm
+| **No generality**
+| Hybrid combiner supports security analysis that can be reduced to
+| approved component algorithms, potentially changing the component implementations
+| Uncertainty about whether separate approval is needed
 | --------------------------------------------------------------------|
-| **Software Blackbox**
-| Signature combiner supports one component algorithm
-| as an approved software module
+| **1-out-of-n generality**
+| Combiner supports one component algorithm in a black-box way but
+| potentially changes the other component algorithm implementations
+| No new approval needed if the black-box component is approved
 | --------------------------------------------------------------------|
-| **Full Software Blackbox**
-| Signature combiner supports both component algorithms as
-| individual, approved software modules
+| **Full generality**
+| Hybrid combiner acts as a wrapper, fully independent of the component
+| signature scheme implementations
+| No new approval needed if at least one component implementation is approved
 | --------------------------------------------------------------------|
 ▼
-{: #tab-defined-groups title="Blackbox spectrum."}
+~~~~
+{: #fig-generality-spectrum title="Generality / Need-for-approval spectrum"}
 
+The least general "combiner" would be a new construction with a security reduction
+to different hardness assumptions but not necessarily to existing/approved signature
+schemes.
+
+Next, is a combiner that might take inspiration from existing/approved signature
+schemes but changes the specifics but such that its security can be reduced to the
+security of an approved algorithm. As such it is uncertain whether a new approval would
+be needed as it might depend on the combiner and changes.
+
+The second-most general construction, would be a combiner that uses at least one approved
+algorithm in a black-box way while it might change the specifics of the other component
+algorithms.
+
+The most or 'fully' general combiner is using all algorithms in a blackbox way, for example
+the concatenation combiner (with a signature being valid if all componentn signatures are valid).
+As long as at least one component is approved, no new approval is needed.
+
+# EUF-CMA Challenges
+Under traditional signature scheme security assumptions such as EUF-CMA, the adversary
+'wins' the security experiment if it can produce a new message such that a message-signature
+pair `(m, sig)` with it correctly verifies. This traditional security notion is challenged under
+a hybrid construct.
+
+The most straightforward comparison would be for the adversary to attempt to produce a new
+message `m'` that a message-hybrid signature pair `(m', sig_h)` correctly verifies.
+However, such a guarantee depends on the signature being strongly non-separable. Otherwise,
+in practical terms a security experiment must capture the case that an existing or new
+message `m` could be verified with a component signature, e.g., to produce `(m', sig_1)`
+that correctly verifies under `Sigma_1.Sign`. Such considerations are beyond the scope
+of traditional security analysis and represent considerations that would need to be
+accounted for depending on the signature combiner method chosen.
 
 # Security Considerations {#security-considerations}
 
 This document discusses digital signature constructions that may be used in
-security protocols. It is an informational document and does not directly affect any other Internet draft. The security considerations for any specific 
-implementation or incorporation of a hybrid scheme should be discussed in the relevant specification documents.
+security protocols. It is an informational document and does not directly affect
+any other Internet draft. The security considerations for any specific
+implementation or incorporation of a hybrid scheme should be discussed in the
+relevant specification documents.
 
 # Discussion of Advantages/Disadvantages
 
@@ -806,12 +846,13 @@ verification failure if a receiver attempts separation.
 
 This draft is based on the template of [I-D.ietf-tls-hybrid-design].
 
-We would like to acknowledge the following people in alphabetical order who have contributed to pushing this draft forward, 
-offered insights and perspectives, and/or stimulated work in the area:  
-Scott Fluhrer   
-Felix Günther  
-John Gray   
-Serge Mister  
-Max Pala  
-Mike Ounsworth   
-Douglas Stebila  
+We would like to acknowledge the following people in alphabetical order who have contributed to pushing this draft forward,
+offered insights and perspectives, and/or stimulated work in the area:
+
+Scott Fluhrer
+Felix Günther
+John Gray
+Serge Mister
+Max Pala
+Mike Ounsworth
+Douglas Stebila
