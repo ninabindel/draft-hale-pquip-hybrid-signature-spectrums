@@ -1539,18 +1539,18 @@ through correct verification of the digital signature(s), as in traditional
 signature security experiments. It is not dependent on other components, such as
 message content checking, or protocol level aspects, such as public key
 provenance. As an illustrative example distinguishing WNS from SNS, consider the
-case of ingredient algorithms $\Sigma_1.Sign$ and $\Sigma_2.Sign$ where the
-hybrid signature is computed as a concatenation $(sig_1, sig_2)$, where $sig_1 =
-\Sigma_1.Sign(hybridAlgID,m)$ and $sig_2 = \Sigma_2.Sign(hybridAlgID,m)$.  In
-this case, separation and delivery of a new message $m^* = (hybridAlgID,m)$
-along with signature $sig_1$ and $\Sigma_1.pk$ could allow for correct
+case of ingredient algorithms <code>Sigma_1.Sign</code> and <code>Sigma_2.Sign</code> where the
+hybrid signature is computed as a concatenation <code>(sig_1, sig_2)</code>, where <code>sig_1 =
+Sigma_1.Sign(hybridAlgID, m)</code> and <code>sig_2 = Sigma_2.Sign(hybridAlgID, m)</code>.  In
+this case, separation and delivery of a new message <code>m^* = (hybridAlgID, m)</code>
+along with signature <code>sig_1</code> and <code>Sigma_1.pk</code> could allow for correct
 verification and the hybrid artifact is embedded in the message instead of the
 signature (identifiable through further investigation but the signature
 verification itself would not fail). Thus, this case shows WNS (assuming the
 verification algorithm is defined accordingly) but not SNS.<a href="#section-1.4.4-1" class="pilcrow">¶</a></p>
 <p id="section-1.4.4-2">Some work <span>[<a href="#I-D.ounsworth-pq-composite-sigs" class="cite xref">I-D.ounsworth-pq-composite-sigs</a>]</span> has looked at reliance on the public
 key certificate chains to explicitly define hybrid use of the public
-key. Namely, that $\Sigma_1.pk$ cannot be used without $\Sigma_2.pk$. This
+key. Namely, that <code>Sigma_1.pk</code> cannot be used without <code>Sigma_2.pk</code>. This
 implies pushing the hybrid artifacts into the protocol and system level and a
 dependency on the security of other verification algorithms (namely those in the
 certificate chain). This further requires that security analysis of a hybrid
@@ -1848,9 +1848,9 @@ artifacts in different locations in <a href="#tab-hybrid-approach-categories" cl
 <ul class="normal">
 <li class="normal" id="section-3.2-3.1">
             <p id="section-3.2-3.1.1">Concatenation: variants of hybridization where, for component algorithms
-$\Sigma_1.Sign$ and $\Sigma_2.Sign$, the hybrid signature is calculated as a
-concatenation $(sig_1, sig_2)$ such that $sig_1 = \Sigma_1.Sign(hybridAlgID,m)$
-and $sig_2 = \Sigma_2.Sign(hybridAlgID,m)$.<a href="#section-3.2-3.1.1" class="pilcrow">¶</a></p>
+<code>Sigma_1.Sign</code> and <code>Sigma_2.Sign</code>, the hybrid signature is calculated as a
+concatenation <code>(sig_1, sig_2)</code> such that <code>sig_1 = Sigma_1.Sign(hybridAlgID, m)</code>
+and <code>sig_2 = Sigma_2.Sign(hybridAlgID, m)</code>.<a href="#section-3.2-3.1.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 <ul class="normal">
