@@ -386,11 +386,11 @@ through correct verification of the digital signature(s), as in traditional
 signature security experiments. It is not dependent on other components, such as
 message content checking, or protocol level aspects, such as public key
 provenance. As an illustrative example distinguishing WNS from SNS, consider the
-case of ingredient algorithms $\Sigma_1.Sign$ and $\Sigma_2.Sign$ where the
-hybrid signature is computed as a concatenation $(sig_1, sig_2)$, where $sig_1 =
-\Sigma_1.Sign(hybridAlgID,m)$ and $sig_2 = \Sigma_2.Sign(hybridAlgID,m)$.  In
-this case, separation and delivery of a new message $m^* = (hybridAlgID,m)$
-along with signature $sig_1$ and $\Sigma_1.pk$ could allow for correct
+case of ingredient algorithms `Sigma_1.Sign` and `Sigma_2.Sign` where the
+hybrid signature is computed as a concatenation `(sig_1, sig_2)`, where `sig_1 =
+Sigma_1.Sign(hybridAlgID, m)` and `sig_2 = Sigma_2.Sign(hybridAlgID, m)`.  In
+this case, separation and delivery of a new message `m^* = (hybridAlgID, m)`
+along with signature `sig_1` and `Sigma_1.pk` could allow for correct
 verification and the hybrid artifact is embedded in the message instead of the
 signature (identifiable through further investigation but the signature
 verification itself would not fail). Thus, this case shows WNS (assuming the
@@ -398,7 +398,7 @@ verification algorithm is defined accordingly) but not SNS.
 
 Some work [I-D.ounsworth-pq-composite-sigs] has looked at reliance on the public
 key certificate chains to explicitly define hybrid use of the public
-key. Namely, that $\Sigma_1.pk$ cannot be used without $\Sigma_2.pk$. This
+key. Namely, that `Sigma_1.pk` cannot be used without `Sigma_2.pk`. This
 implies pushing the hybrid artifacts into the protocol and system level and a
 dependency on the security of other verification algorithms (namely those in the
 certificate chain). This further requires that security analysis of a hybrid
@@ -707,9 +707,9 @@ fusion) for clarity in description, before showing how each one may have
 artifacts in different locations in {{tab-hybrid-approach-categories}}.
 
 - Concatenation: variants of hybridization where, for component algorithms
-$\Sigma_1.Sign$ and $\Sigma_2.Sign$, the hybrid signature is calculated as a
-concatenation $(sig_1, sig_2)$ such that $sig_1 = \Sigma_1.Sign(hybridAlgID,m)$
-and $sig_2 = \Sigma_2.Sign(hybridAlgID,m)$.
+`Sigma_1.Sign` and `Sigma_2.Sign`, the hybrid signature is calculated as a
+concatenation `(sig_1, sig_2)` such that `sig_1 = Sigma_1.Sign(hybridAlgID, m)`
+and `sig_2 = Sigma_2.Sign(hybridAlgID, m)`.
 
 <!--
 
@@ -814,9 +814,9 @@ validity.
 <!--
 
 The artifact placements in nesting combiners may be surprisingly similar to
-those in concatenation option cases 2, 3, and 4. Namely, if $sig_2 =
-\Sigma_2.Sign(hybridAlgID,(m, sig_1))$, then the "message" $(m, sig_1)$ input
-into $\Sigma_2.Sign$ actually contains the artifact and acts as a label.  Unless
+those in concatenation option cases 2, 3, and 4. Namely, if `sig_2 =
+Sigma_2.Sign(hybridAlgID, (m, sig_1))`, then the "message" `(m, sig_1)` input
+into `Sigma_2.Sign` actually contains the artifact and acts as a label.  Unless
 an additional label is provided within $m$ itself, $sig_1$ does not therefore
 contain an artifact. Where the artifact is located is necessarily dependent upon
 the threat model; guessing which algorithm is more at risk from a stripping
