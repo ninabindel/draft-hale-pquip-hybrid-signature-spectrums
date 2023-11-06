@@ -280,9 +280,10 @@ One example of a next generation algorithm is the signature scheme ML-DSA
 (a.k.a. CRYSTALS-Dilithium) that has been selected for standardization by
 NIST. While the scheme follows the well-known Fiat-Shamir transform to construct the
 signature scheme, it also relies on rejection sampling that is known to give
-cache side channel information (although this does not lead to a known attack). Furthermore, recent attacks again the next-generation multivariate schemes Rainbow and GeMSS might call into question the asymptotic
-and concrete security for conservative adopters and therefore might hinder
-adoption.
+cache side channel information (although this does not lead to a known attack).
+Furthermore, recent attacks again the next-generation multivariate schemes Rainbow
+and GeMSS might call into question the asymptotic and concrete security for
+conservative adopters and therefore might hinder adoption.
 
 ### **Time**
 
@@ -388,7 +389,9 @@ case of ingredient algorithms `Sigma_1.Sign` and `Sigma_2.Sign` where the
 hybrid signature is computed as a concatenation `(sig_1, sig_2)`, where `sig_1 =
 Sigma_1.Sign(hybridAlgID, m)` and `sig_2 = Sigma_2.Sign(hybridAlgID, m)`.  In
 this case, a new message `m' = (hybridAlgID, m)`
-along with signature `sig_1` and `Sigma_1.pk`, with the hybrid artifact embedded in the message instead of the signature, could be correctly verified.  The separation would be identifiable through further investigation but the signature
+along with signature `sig_1` and `Sigma_1.pk`, with the hybrid artifact embedded
+in the message instead of the signature, could be correctly verified. The
+separation would be identifiable through further investigation but the signature
 verification itself would not fail. Thus, this case shows WNS (assuming the
 verification algorithm is defined accordingly) but not SNS.
 
@@ -414,15 +417,18 @@ in the SNS category.
 
 ### **Backwards/Forwards Compatibility**
 
-Backwards compatibility refers to the property where a hybrid signature may be verified by only verifying one component signature, allowing the scheme to be used by legacy receivers. In general this means verifying the traditional component signature scheme, potentially ignoring the next-generation signature entirely.
-This provides an option to transition sender systems
-to next-generation algorithms while still supporting select legacy
+Backwards compatibility refers to the property where a hybrid signature may be
+verified by only verifying one component signature, allowing the scheme to be
+used by legacy receivers. In general this means verifying the traditional
+component signature scheme, potentially ignoring the next-generation signature
+entirely. This provides an option to transition sender systems to
+next-generation algorithms while still supporting select legacy
 receivers. Notably, this is a verification property; the sender has provided a
-hybrid digital signature, but the verifier is allowed, due to internal
-policy and/or implementation, to only verify one component
-signature. Backwards compatibility may be further decomposed to subcategories
-where ingredient key provenance is either separate or hybrid so as to support
-implementations that cannot recognize (and/or process) hybrid signatures or keys.
+hybrid digital signature, but the verifier is allowed, due to internal policy
+and/or implementation, to only verify one component signature. Backwards
+compatibility may be further decomposed to subcategories where ingredient key
+provenance is either separate or hybrid so as to support implementations that
+cannot recognize (and/or process) hybrid signatures or keys.
 
 Forwards compatibility has also been a consideration in hybrid proposals
 [I-D.becker-guthrie-noncomposite-hybrid-auth]. Forward compatibility assumes
@@ -511,8 +517,8 @@ signature constructions are expected to be as space performant as possible. This
 includes messages (as they might increase if artifacts are used), public keys,
 and the hybrid signature.  For the hybrid signature, size should no more than
 minimally exceed the signature size of the two component signatures. In some
-cases, it may be possible for a hybrid signature to be smaller than the concatenationation of the two
-component signatures.
+cases, it may be possible for a hybrid signature to be smaller than the
+concatenationation of the two component signatures.
 
 ### **Minimal duplicate information**
 
@@ -624,7 +630,7 @@ however, depends strongly on where such evidence resides (e.g., in the message,
 the signature, or somewhere on the protocol level instead of at the algorithmic
 level). Even commonly discussed hybrid approaches, such as concatenation, are
 not inherently tied to one type of security (e.g., WNS or SNS). This can lead to
-ambiguities when comparing different approaches and assumptions about 
+ambiguities when comparing different approaches and assumptions about
 security or lack thereof. Thus in this section we cover artifact locations and
 also walk through a high-level comparison of a few hybrid categories to
 show how artifact location can differ within a given approach.  Artifact
@@ -778,19 +784,19 @@ In cases 2 and 5 the artifacts lie within the
 message. This is notable as the authenticity of the message relies on the
 validity of the signature, and the artifact location means that the signature in
 turn relies on the authentic content of the message (the artifact label). This
-creates a risk of circular dependency. Alternative approaches such as 
+creates a risk of circular dependency. Alternative approaches such as
 cases 3 and 4 solve this circular dependency by provisioning keys in a combined
 certificate.
 
 Another observation from this comparison is that artifact locations may be
-similar among some approaches. For instance, case 3 and case 6 both contain artifacts in the certificate. Naturally these
-examples are high-level and further specification on concrete schemes in the
-categories are needed before prescribing non-separability guarantees to
-each, but this does indicate how there could be a strong similarity between such
-guarantees.  Such comparisons allow for a systematic decision process, where
-security is compared and identified and, if schemes are similar in the desired
-security goal, then decisions between schemes can be based on performance and
-implementation ease.
+similar among some approaches. For instance, case 3 and case 6 both contain
+artifacts in the certificate. Naturally these examples are high-level and
+further specification on concrete schemes in the categories are needed before
+prescribing non-separability guarantees to each, but this does indicate how
+there could be a strong similarity between such guarantees.  Such comparisons
+allow for a systematic decision process, where security is compared and
+identified and, if schemes are similar in the desired security goal, then
+decisions between schemes can be based on performance and implementation ease.
 
 A final observation that this type of comparison provides is how various
 combiners may change the security analysis assumptions in a system. For
