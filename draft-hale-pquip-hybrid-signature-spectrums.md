@@ -2,7 +2,7 @@
 title: Hybrid signature spectrums
 abbrev: hale-pquip-hybrid-spectrums
 docname: draft-hale-pquip-hybrid-signature-spectrums-latest
-date: 2023-10-30
+date: 2023-11-06
 category: info
 
 ipr: trust200902
