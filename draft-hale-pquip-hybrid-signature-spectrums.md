@@ -2,7 +2,7 @@
 title: Hybrid signature spectrums
 abbrev: hale-pquip-hybrid-spectrums
 docname: draft-hale-pquip-hybrid-signature-spectrums-latest
-date: 2023-10-23
+date: 2023-10-30
 category: info
 
 ipr: trust200902
@@ -144,7 +144,7 @@ https://github.com/dconnolly/draft-hale-pquip-hybrid-signature-spectrums
 - extend with discussion points from private emails between Britta, Nina and IETF
 - extend with discussion points fromn IETF mailing lists - for both be very careful to provide
 acknowledgements!!
-- double-check and extend/refer to Florence' draft
+- double-check and extend/refer to Flo's draft
 
 -->
 
@@ -163,7 +163,7 @@ authenticity play a role (e.g., digital signatures on legal documents).
 
 One approach to design quantum-resistant protocols, particularly during the
 transition period from traditional to post-quantum algorithms, is incorporating
-Hybrid/Composite signatures schemes, which combine both traditional and
+hybrid/composite signatures schemes, which combine both traditional and
 post-quantum (or more generally next-generation) algorithms in one cryptographic
 scheme. Hybridization has been looked at for key encapsulation [HYBRIDKEM], and
 in an initial sense for digital signatures [HYBRIDSIG]. Compared to key
@@ -205,7 +205,7 @@ certificate' as defined in [RFC4949].
     input a secret signing key `sk` and a message `m`, and outputs a signature `sig`.
   - `Verify(pk, sig, m) -> b`: A verification algorithm, which takes as input a
     public verifying key `pk`, a signature `sig` and a message `m`, and outputs
-    a bit `b` indicating `accept` ($b=1$) or `reject` ($b=0$) of the signature
+    a bit `b` indicating `accept (b=1)` or `reject (b=0)` of the signature
     for message `m`.
 
 - Hybrid signature scheme: Following [I-D.ietf-pquip-pqt-hybrid-terminology], we
@@ -277,12 +277,10 @@ complexity to a protocol and introduces the risk of implementation mistakes in
 the hybridization process.
 
 One example of a next generation algorithm is the signature scheme ML-DSA
-(a.k.a. Kyber-Dilithium) that has been selected for standardization by
-NIST. While the scheme follows the know Fiat-Shamir transform to construct the
+(a.k.a. CRYSTALS-Dilithium) that has been selected for standardization by
+NIST. While the scheme follows the well-known Fiat-Shamir transform to construct the
 signature scheme, it also relies on rejection sampling that is known to give
-cache side channel information (not necessarily leading to a known attack
-though). Furthermore, recent attacks again some next-generation signature
-schemes such as MULTI-VARIATE schemes might call into question the asymptotic
+cache side channel information (although this does not lead to a known attack). Furthermore, recent attacks again the next-generation multivariate schemes Rainbow and GeMSS might call into question the asymptotic
 and concrete security for conservative adopters and therefore might hinder
 adoption.
 
@@ -291,8 +289,8 @@ adoption.
 The need to transition to quantum-resistant algorithms now while simultaneously
 being aware of potential, hidden subtleties in their resistance to standard
 attacks drives transition designs towards hybridization.  Mosca’s equation
-[MOSCA] very simply illustrates the risk of post-quantum transition delay: $l +
-d > q$, where l is the information life-span, d is the time for system
+[MOSCA] very simply illustrates the risk of post-quantum transition delay: `l +
+d > q`, where l is the information life-span, d is the time for system
 transition to post-quantum algorithms, and q is the time before a quantum
 computer is ready to execute cryptanalysis. As opposed to key exchange and KEMs,
 it may not be obvious why there is urgency for an adoption of next-generation
@@ -329,7 +327,7 @@ such as backwards compatibility.
 One goal is security of hybrid signature schemes, in particular that EUF-CMA
 security is maintained as long as at least one of the ingredient schemes is
 EUF-CMA secure.  There might be, however, other goals in competition with this
-one, such as backward-compatibility, where the EUF-CMA seucurity of the hybrid
+one, such as backward-compatibility, where the EUF-CMA security of the hybrid
 signature relies solely on the security of one of the ingredient schemes instead
 of relying on both.
 
@@ -356,7 +354,7 @@ behind. For example there are artifacts that a carefully designed verifier may
 be able to identify, or that are identifiable in later audits. This was later
 termed Weak Non-Separability (WNS) [HYBRIDSIGDESIGN]. Note that WNS does not
 restrict an adversary from potentially creating a valid ingredient digital
-signatures from a hybrid one (a signature stripping attack), but rather implies
+signature from a hybrid one (a signature stripping attack), but rather implies
 that such a digital signature will contain artifacts of the separation. Thus
 authentication is not simply provided by the sender to the receiver through
 correct verification of the digital signature(s), but potentially through
@@ -368,7 +366,7 @@ signature scheme. If an adversary removes one ingredient signature but not the
 other, then artifacts in the message itself point to the possible existence of
 hybrid signature such as a label stating “this message must be hybrid
 signed”. This might be a counter measure against stripping attacks if the
-verifier expects a hybrid signature scheme to ensure this property. However, it
+verifier expects a hybrid signature scheme to have this property. However, it
 places the responsibility of signature validity not only on the correct format
 of the message, as in a traditional signature security guarantee, but the
 precise content thereof.
@@ -389,11 +387,9 @@ provenance. As an illustrative example distinguishing WNS from SNS, consider the
 case of ingredient algorithms `Sigma_1.Sign` and `Sigma_2.Sign` where the
 hybrid signature is computed as a concatenation `(sig_1, sig_2)`, where `sig_1 =
 Sigma_1.Sign(hybridAlgID, m)` and `sig_2 = Sigma_2.Sign(hybridAlgID, m)`.  In
-this case, separation and delivery of a new message `m^* = (hybridAlgID, m)`
-along with signature `sig_1` and `Sigma_1.pk` could allow for correct
-verification and the hybrid artifact is embedded in the message instead of the
-signature (identifiable through further investigation but the signature
-verification itself would not fail). Thus, this case shows WNS (assuming the
+this case, a new message `m' = (hybridAlgID, m)`
+along with signature `sig_1` and `Sigma_1.pk`, with the hybrid artifact embedded in the message instead of the signature, could be correctly verified.  The separation would be identifiable through further investigation but the signature
+verification itself would not fail. Thus, this case shows WNS (assuming the
 verification algorithm is defined accordingly) but not SNS.
 
 Some work [I-D.ounsworth-pq-composite-sigs] has looked at reliance on the public
@@ -403,7 +399,7 @@ implies pushing the hybrid artifacts into the protocol and system level and a
 dependency on the security of other verification algorithms (namely those in the
 certificate chain). This further requires that security analysis of a hybrid
 digital signature requires analysis of the key provenance, i.e., not simply that
-a valid public key is used but how it hybridization and hybrid artifacts have
+a valid public key is used but how its hybridization and hybrid artifacts have
 been managed throughout the entire chain. External dependencies such as this may
 imply hybrid artifacts lie outside the scope of the signature algorithm
 itself. SNS may potentially be achieveable based on dependencies at the system
@@ -418,19 +414,15 @@ in the SNS category.
 
 ### **Backwards/Forwards Compatibility**
 
-Backwards compatibility refers to the property where a hybrid algorithm may also
-be used for legacy receivers that may take a hybrid signature and verify it as
-being valid using only the verification algorithm of one component scheme (e.g.,
-the verification algorithm of the traditional signature scheme used in the
-hybrid scheme), potentially ignoring the next-generation signature
-entirely. This provides an option to transition various sender system attributes
+Backwards compatibility refers to the property where a hybrid signature may be verified by only verifying one component signature, allowing the scheme to be used by legacy receivers. In general this means verifying the traditional component signature scheme, potentially ignoring the next-generation signature entirely.
+This provides an option to transition sender systems
 to next-generation algorithms while still supporting select legacy
 receivers. Notably, this is a verification property; the sender has provided a
 hybrid digital signature, but the verifier is allowed, due to internal
-restrictions and/or implementation, to only verify one component
+policy and/or implementation, to only verify one component
 signature. Backwards compatibility may be further decomposed to subcategories
 where ingredient key provenance is either separate or hybrid so as to support
-implementations that cannot recognize (and/or process) hybrid signatures.
+implementations that cannot recognize (and/or process) hybrid signatures or keys.
 
 Forwards compatibility has also been a consideration in hybrid proposals
 [I-D.becker-guthrie-noncomposite-hybrid-auth]. Forward compatibility assumes
@@ -438,7 +430,7 @@ that hybrid signature schemes will be used for some time, but that eventually
 all systems will transition to use only one (particularly, only one
 next-generation) algorithm. As this is very similar to backwards compatibility,
 it also may imply separability of a hybrid algorithm; however, it could also
-simply imply capability to support separate ingredient signatures. Thus the key
+simply imply capability to support separate component signatures. Thus the key
 distinction between backwards and forwards compatibility is that backwards
 compatibility may be needed for legacy systems that cannot use and/or process
 hybrid or next-generation signatures, whereas in forwards compatibility the
@@ -499,7 +491,7 @@ Hybrid generality means that a general signature combiner is defined, based on
 inherent and common structures of component digital signatures "categories." For
 instance, since multiple signature schemes use a Fiat-Shamir Transform, a hybrid
 scheme based on the transform can be made that is generalizable to all such
-signatures. Such generality can also result in simplified constructions where as
+signatures. Such generality can also result in simplified constructions whereas
 more tailored hybrid variants might be more efficient in terms of sizes and
 performance.
 
@@ -519,7 +511,7 @@ signature constructions are expected to be as space performant as possible. This
 includes messages (as they might increase if artifacts are used), public keys,
 and the hybrid signature.  For the hybrid signature, size should no more than
 minimally exceed the signature size of the two component signatures. In some
-cases, it may be possible for a hybrid signature to even be smaller than two
+cases, it may be possible for a hybrid signature to be smaller than the concatenationation of the two
 component signatures.
 
 ### **Minimal duplicate information**
@@ -527,7 +519,7 @@ component signatures.
 Similarly to [I-D.ietf-tls-hybrid-design], duplicated information should be
 avoided when possible. This might concern repeated information in hybrid
 certificates or in the communication of component certificates in additional to
-hybrid certificates (for example to acheive backwards/forwards-comptability), or
+hybrid certificates (for example to achieve backwards/forwards-compatibility), or
 sending multiple public keys or signatures of the same component algorithm.
 
 
@@ -559,7 +551,7 @@ representing `degrees` of separability hardness, visualized in
 
 At one end of the spectrum are schemes in which one of the ingredient signatures
 can be stripped away with the verifier not being able to detect the change
-during verification.An example of this includes simple concatenation of
+during verification. An example of this includes simple concatenation of
 signatures without any artifacts used. Nested signatures (where a message is
 signed by one component algorithm and then the message-signature combination is
 signed by the second component algorithm) may also fall into this category,
@@ -573,7 +565,7 @@ protocol level, etc.). This may enable the verifier to detect if a component
 signature is stripped away from a hybrid signature, but that detectability
 depends highly on the type of artifact and permissions.  For instance, if a
 message contains a label artifact "This message must be signed with a hybrid
-signature" then the system must be allowed to analyze the message components for
+signature" then the system must be allowed to analyze the message contents for
 possible artifacts. Whether a hybrid signature offers (Weak/Strong)
 Non-Separability might also depend on the implementation and policy of the
 protocol or application the hybrid signature is used in on the verifier
@@ -589,8 +581,8 @@ Non-Separability, where artifacts may be in the actual message, the certificate,
 or in other non-signature components, this notion more closely ties to
 traditional algorithm security notions (such as EUF-CMA) where security is
 dependent on the internal construct of the signature algorithm and its
-verification. In this type, the verifier is enabled to detect artifacts on an
-algorithmic level during verification. For example, the signature itself encodes
+verification. In this type, the verifier can detect artifacts on an
+algorithmic level during verification. For example, the signature itself may encode
 the information that a hybrid signature scheme is used. Examples of this type
 may be found in [HYBRIDSIGDESIGN].
 
@@ -601,7 +593,7 @@ of
 verifier may skill a final bit comparison check.
 -->
 
-For schemes achieving the most demanding security notions, i.e., Strong
+For schemes achieving the most demanding security notion, Strong
 Non-Separability with Simultaneous Verification, verification succeeds not only
 when both of the component signatures are present but also only when the
 verifier has verified both signatures. Moreover, no information is leaked to the
@@ -629,12 +621,12 @@ on discussing the concrete algorithms.
 Hybridization benefits from the presence of artifacts as evidence of the
 sender's intent to decrease the risk of successful stripping attacks. This,
 however, depends strongly on where such evidence resides (e.g., in the message,
-the signature, or somewhere on the protocol level instead of the algorithmic
+the signature, or somewhere on the protocol level instead of at the algorithmic
 level). Even commonly discussed hybrid approaches, such as concatenation, are
 not inherently tied to one type of security (e.g., WNS or SNS). This can lead to
-ambiguities when comparing different approaches and assumptions about approach
+ambiguities when comparing different approaches and assumptions about 
 security or lack thereof. Thus in this section we cover artifact locations and
-also walk through a high-level comparison of a few hybrid approach categories to
+also walk through a high-level comparison of a few hybrid categories to
 show how artifact location can differ within a given approach.  Artifact
 location is tied to non-separability notions above; thus the selection of a
 given security guarantee and general hybrid approach must also include finer
@@ -662,14 +654,14 @@ this (sub-)section covers some specific examples of artifact placement.
 There are a variety of artifact locations possible, ranging from within the
 message to the signature algorithm to the protocol level and even into policy,
 as shown in {{tab-artifact-location}}.  For example, one artifact location could
-be in the message-to-be-signed, e.g., containing a label artifact.  Depending on
-the hybrid type, this might be stripped away though. For example, a quantum
+be in the message to be signed, e.g., containing a label artifact.  Depending on
+the hybrid type, it might be possible to strip this away. For example, a quantum
 attacker could strip away the quantum-secure signature of a concatenated dual
 signature, and (being able to forge, e.g., ECDSA signatures) remove the label
 artifact from the message as well. So, for many applications and threat models,
 adding an artificat in the message might not prevent stripping attacks.  Another
 artifact location could be in the public key certificates as described in
-[I-D.ounsworth-pq-composite-sigs]. In still yet another case, artifacts may be
+[I-D.ounsworth-pq-composite-sigs]. In yet another case, artifacts may be
 present through the fused hybrid method, thus making them part of the signature
 at the algorithmic level.
 
@@ -696,11 +688,11 @@ standalone sense.
 Here we provide a high-level example of how artifacts can appear in different
 locations even within a single, common approach. We look at the following
 categories of approaches: concatenation, nesting, and fusion.  This is to
-illustrate that nominally a given approach does not inherently imply a specific
+illustrate that a given approach does not inherently imply a specific
 non-separability notion and that there are subtleties to the selection decision,
 since hybrid artifacts are related to non-separability guarantees.
 Additionally, this comparison highlights how artifacts placement can be
-identical in two nominally different hybrid approaches.
+identical in two different hybrid approaches.
 
 We briefly summarize the hybrid approach categories (concatenation, nesting, and
 fusion) for clarity in description, before showing how each one may have
@@ -776,39 +768,38 @@ stripping attacks, which means that different artifact locations imply different
 overall system implementation considerations to be able to achieve such
 detection.
 
-Option case 1 provides the weakest guarantees of hybrid identification, as there
+Case 1 provides the weakest guarantees of hybrid identification, as there
 are no prescribed artifacts and therefore non-separability is not achieved.
-However, as can be seen, this does not generically imply that every
+However, as can be seen, this does not imply that every
 implementation using concatenation fails to achieve non-separability. Thus, it
-is advisable for implementors to provide transparency about artifact locations.
+is advisable for implementors to be transparent about artifact locations.
 
-In further observation, in option cases 2 and 5 the artifacts lie within the
+In cases 2 and 5 the artifacts lie within the
 message. This is notable as the authenticity of the message relies on the
 validity of the signature, and the artifact location means that the signature in
 turn relies on the authentic content of the message (the artifact label). This
-creates a risk of circular dependency. Alternative approaches such as option
-cases 3 and 4 solve this circular dependancy by provisioning keys in a combined
+creates a risk of circular dependency. Alternative approaches such as 
+cases 3 and 4 solve this circular dependency by provisioning keys in a combined
 certificate.
 
 Another observation from this comparison is that artifact locations may be
-similar among some approaches. For instance, option case 3 and
-option case 6 both contain artifacts in the certificate. Naturally these
+similar among some approaches. For instance, case 3 and case 6 both contain artifacts in the certificate. Naturally these
 examples are high-level and further specification on concrete schemes in the
-categories are needed before prescribing specific non-separability guarantees to
+categories are needed before prescribing non-separability guarantees to
 each, but this does indicate how there could be a strong similarity between such
-guarantees.  Such comparisons all for a systematic decision process, where
+guarantees.  Such comparisons allow for a systematic decision process, where
 security is compared and identified and, if schemes are similar in the desired
 security goal, then decisions between schemes can be based on performance and
 implementation ease.
 
 A final observation that this type of comparison provides is how various
 combiners may change the security analysis assumptions in a system. For
-instance, option cases 3, 4, 5, and 6 all push artifacts - and therefore the
+instance, cases 3, 4, 5, and 6 all push artifacts - and therefore the
 signature validity - into the certificate chain. Naturally the entire chain must
 then also use a similar combiner if a straightforward security argument is to be
-made. Other options cases, such as 8, 9, 10, and 11 put artifacts within the
-signature itself, meaning that these bear the closest resimblance to
-tranditional schemes where message authenticity is dependent on signature
+made. Other cases, such as 8, 9, 10, and 11 put artifacts within the
+signature itself, meaning that these bear the closest resemblance to
+traditional schemes where message authenticity is dependent on signature
 validity.
 
 <!--
@@ -852,7 +843,7 @@ signature use. NIST provides the following guidance (emphasis added),
 > assuring the validity of the `hybrid` signature. [NIST_PQC_FAQ]
 
 The emphasized texts point to two things: 1) the signature scheme for one of the
-component hybrids must be approved and 2) that said algorithm must be properly
+component algorithms must be approved and 2) that said algorithm must be properly
 implemented. This leaves some ambiguity as to whether only the algorithm must be
 approved and well implemented, or if that implementation must go through an
 approval process as well.  As such, there is a ``scale of approval`` that
