@@ -142,9 +142,11 @@ https://github.com/dconnolly/draft-hale-pquip-hybrid-signature-spectrums
 
 - add discussion
 - extend with discussion points from private emails between Britta, Nina and IETF
-- extend with discussion points fromn IETF mailing lists - for both be very careful to provide
-acknowledgements!!
-- double-check and extend/refer to Flo's draft
+- revise re Brendan's email
+  - change terminology 'proof composability'?
+  - change terminology 'next-gen' vs 'post-quantum'?
+- change terminology using 'black-box'?
+
 
 -->
 
@@ -210,9 +212,9 @@ certificate' as defined in [RFC4949].
 
 - Hybrid signature scheme: Following [I-D.ietf-pquip-pqt-hybrid-terminology], we
   define a hybrid signature scheme to be "a multi-algorithm digital signature
-  scheme made up of two or more component digital signature algorithms ...". We
+  scheme made up of two or more component digital signature algorithms ...". While it often makes sense for security purposes to 
   require that the security of the component schemes is based on the hardness of
-  different cryptographic assumptions. In contrast to
+  different cryptographic assumptions, in other cases hybrid schemes might be motived, e.g., by interoperatbility of variants on the same scheme and as such both component schemes are based on the same hardness assumption. We allow this explicitely. This means in particular that in contrast to
   [I-D.ietf-pquip-pqt-hybrid-terminology], we will use the more general term
   'hybrid signature scheme' instead of requiring one post-quantum and one
   traditional algorithm (i.e., PQ/T hybrid signature schemes) to allow also the
@@ -958,4 +960,4 @@ contributed to pushing this draft forward, offered insights and perspectives,
 and/or stimulated work in the area:
 
 Scott Fluhrer, Felix Günther, John Gray, Serge Mister, Max Pala, Mike Ounsworth,
-Douglas Stebila
+Douglas Stebila, Brendan Zember
