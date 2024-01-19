@@ -165,14 +165,14 @@ authenticity play a role (e.g., digital signatures on legal documents).
 
 One approach to design quantum-resistant protocols, particularly during the
 transition period from traditional to post-quantum algorithms, is incorporating
-hybrid/composite signatures schemes, which combine both traditional and
+hybrid signatures schemes, which combine both traditional and
 post-quantum (or more generally next-generation) algorithms in one cryptographic
 scheme. Hybridization has been looked at for key encapsulation [HYBRIDKEM], and
 in an initial sense for digital signatures [HYBRIDSIG]. Compared to key
 encapsulation, hybridization of digital signatures, where the verification tag
 may be expected to attest to both standard and post-quantum components, is
 subtler to design and implement due to the potential separability of the
-composite signatures and the risk of downgrade/stripping attacks.  There are
+hybrid/dual signatures and the risk of downgrade/stripping attacks.  There are
 also a range of requirements and properties that may be required from dual
 signatures, not all of which can be achieved at once.
 
@@ -218,15 +218,16 @@ certificate' as defined in [RFC4949].
   [I-D.ietf-pquip-pqt-hybrid-terminology], we will use the more general term
   'hybrid signature scheme' instead of requiring one post-quantum and one
   traditional algorithm (i.e., PQ/T hybrid signature schemes) to allow also the
-  combination of several post-quantum algorithms. The term 'composite' scheme is
-  often used as a synonym for 'hybrid scheme'. This is different from
-  [I-D.ietf-pquip-pqt-hybrid-terminology] where the term is used at the protocol
-  level.
+  combination of several post-quantum algorithms. The term 'composite scheme' is
+  sometimes used as a synonym for 'hybrid scheme'. This is different from
+  [I-D.ietf-pquip-pqt-hybrid-terminology] where the term is used as a specific instantiation of hybrid schemes such that "where
+   multiple cryptographic algorithms are combined to form a single key
+   or signature such that they can be treated as a single atomic object
+   at the protocol level." To avoid confusing we will avoid the term 'composite scheme'. 
 
 - Hybrid signature: A hybrid signature is the output of the hybrid signature
-  scheme's signature generation. As synonyms we might use 'composite signature'
-  or 'dual signature'.  For example, NIST define a dual signature as "two or
-  more signatures on a common message" [NIST_PQC_FAQ].
+  scheme's signature generation. As synonyms we might use 'dual signature'.  For example, NIST define a dual signature as "two or
+  more signatures on a common message" [NIST_PQC_FAQ]. For the same reason as above we will avoid using the term 'composite signature' although it sometimes appears as synonym for 'hybrid/dual signature'.
 
 - Component (signature) scheme: Component signature schemes are the
   cryptographic algorithms contributing to the hybrid signature scheme. This has
@@ -567,7 +568,7 @@ dependent on whether the inner or outer signature is stripped off without any
 artifacts remaining.
 
 Next on the spectrum are weakly non-separable signatures. Under Weak
-Non-Separability, if one of the composite signatures of a hybrid is removed
+Non-Separability, if one of the component signatures of a hybrid is removed
 artifacts of the hybrid will remain (in the message, signature, or at the
 protocol level, etc.). This may enable the verifier to detect if a component
 signature is stripped away from a hybrid signature, but that detectability
