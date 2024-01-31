@@ -260,7 +260,16 @@ addition, we explicate the motivation for hybrid signatures here.
 ### **Complexity**
 
 Next-generation algorithms and their underlying hardness assumptions are often
-more complex than traditional algorithms and as such carry a higher risk of
+more complex than traditional algorithms. For example, the signature scheme ML-DSA
+(a.k.a. CRYSTALS-Dilithium) that has been selected for standardization by
+NIST. While the scheme follows the well-known Fiat-Shamir transform to construct the
+signature scheme, it also relies on rejection sampling that is known to give
+cache side channel information (although this does not lead to a known attack). Likewise, the signature scheme Falcon uses complex sampling during signature generation. 
+Furthermore, recent attacks again the next-generation multivariate schemes Rainbow
+and GeMSS might call into question the asymptotic and concrete security for
+conservative adopters and therefore might hinder adoption.
+
+As such, some next-generation algorithms carry a higher risk of
 implementation mistakes and revision of parameters compared to traditional
 algorithms, such as RSA. RSA is a relatively simple algorithm to understand and
 explain, yet during its existence and use there have been multiple attacks and
@@ -278,15 +287,6 @@ if a hybrid approach has been used. The complexity of next-generation algorithms
 needs to be balanced against the fact that hybridization itself adds more
 complexity to a protocol and introduces the risk of implementation mistakes in
 the hybridization process.
-
-One example of a next generation algorithm is the signature scheme ML-DSA
-(a.k.a. CRYSTALS-Dilithium) that has been selected for standardization by
-NIST. While the scheme follows the well-known Fiat-Shamir transform to construct the
-signature scheme, it also relies on rejection sampling that is known to give
-cache side channel information (although this does not lead to a known attack).
-Furthermore, recent attacks again the next-generation multivariate schemes Rainbow
-and GeMSS might call into question the asymptotic and concrete security for
-conservative adopters and therefore might hinder adoption.
 
 ### **Time**
 
