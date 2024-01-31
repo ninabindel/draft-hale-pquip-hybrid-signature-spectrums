@@ -734,9 +734,8 @@ in a stripping attack) may be goals of a nesting approach.
 -->
 
 - Fused hybrid: variants of hybridization where for component algorithms
-`Sigma_1.Sign` and `Sigma_2.Sign`, the hybrid signature is calculated with
-entanglement to produce a single hybrid signature `sig_h` without clear
-component constructs.
+`Sigma_1.Sign` and `Sigma_2.Sign`, the hybrid signature is calculated to generate a single hybrid signature `sig_h` that cannot be clearly divided into 
+component constructs. For example, if both signature schemes are signatures schemes constructed through the Fiat-Shamir transform, thus the component signatures would include a response r_1 and r_2, and a challenge c_1 and c_2 that is a hash computed over the respective commitments comm_1 and comm_2 (and the message). A fused hybrid signature could consist of the component responses, r_1 and r_2 and a hash over 'both' responses, i.e., c = Hash(comm_1,comm_2,message). As such, c does not belong to either of the component signatures but they are 'entangled'. 
 
 <!--
 
