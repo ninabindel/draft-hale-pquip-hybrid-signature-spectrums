@@ -121,6 +121,22 @@ informative:
 
   RFC4949:
 
+  LWEEXP:
+    title: Learning with Errors in the Exponent
+    author:
+      -
+        ins: O. Dagdelen 
+        name: Oezguer Dargdelen
+      -
+        ins: S. Gajek
+        name: Sebastian Gajek
+      -
+        ins: F. Goepfert
+        name: Florian Goepfert
+    date: 2015
+    refcontent: Information Security and Cryptology pp.69-84
+    seriesinfo:
+      DOI: 110.1007/978-3-319-30840-1\_5
 
 --- abstract
 
@@ -348,6 +364,8 @@ algorithms. The resulting hybrid signature would be, in effect, an entirely new
 algorithm of its own. The more the ingredient signature schemes are entangled,
 the more likely it is that an entirely new proof is required, thus not meeting
 proof composability.
+
+For example, a signature scheme build on a merged hardness assumptions such as 'LWE in the exponent' [LWEEXP] might be consider a hybrid signature scheme but would not be proof-composable as the security would need to be directly reduced from the hardness of the 'LWE in the exponent' instance. 
 
 ### **Weak Non-Separability**
 
