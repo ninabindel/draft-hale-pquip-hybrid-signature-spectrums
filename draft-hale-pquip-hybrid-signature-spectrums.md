@@ -338,7 +338,10 @@ Under proof composability, the ingredient algorithms are combined in such a way
 that it is possible to prove a security reduction from the security properties
 of hybrid signature scheme to the properties of the respective ingredient
 signature schemes and, potentially, other building blocks such as hash
-functions, KDF, etc.  Otherwise an entirely new proof of security is required,
+functions, KDF, etc.  
+As a simple example, the security of a concatenation combiner in which, e.g., a post-quantum signature and a classical signature are generated over the same message, then concatenated to generate the dual/hybrid signature can be reduced to the security of the component signature schemes in a black-box way [HYBRIDSIG]. As such it is proof-composable. 
+
+If a hybrid combiner is not proof-composable, an entirely new proof of security is required,
 and there is a lack of assurance that the combination builds on the
 standardization processes and analysis performed to date on ingredient
 algorithms. The resulting hybrid signature would be, in effect, an entirely new
