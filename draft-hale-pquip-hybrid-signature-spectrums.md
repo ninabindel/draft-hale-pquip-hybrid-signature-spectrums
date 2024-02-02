@@ -946,10 +946,15 @@ relevant specification documents.
 
 # Discussion of Advantages/Disadvantages
 
-There is an inherent mutual exclusion between backwards compatibility and SNS.
+The design (and hence, security guarantees) of hybrid signature schemes depend heavily on the properties needed for the application or protocol using hybrid signatures. It seems that not all goals can be achieved simultaneously as exemplified below. 
+
+Backwards compatibility vs. SNS. There is an inherent mutual exclusion between backwards compatibility and SNS.
 While WNS allows for a valid separation under leftover artifacts, SNS will
 ensure verification failure if a receiver attempts separation.
 
+Backwards compatibility vs. hybrid unforgability. Similarly, there is an inherent mutual exclusion between backwards comptaibility and hybrid unforgability as briefly mentioned above. Since the goal of backwards compatibility is usually to allow legacy systems without any software change to be able to process hybrid signatures, all differences between the legacy signature format and the hybrid signature format must allow to be ignored, including skipping verification of signatures in additional to the classical signature. As such security cannot rely on the security of all component signatures. 
+
+Simultaneous verification vs. low need for approval. It seems that the more simultaneous verification is enforced by the hybrid design, the higher is the need-for-approval as simultaneous verification algorithms fuse (or 'entangle') the verification of the component algorithms such that verification operations from the different component schemes depend on each other in some way. 
 
 # Acknowledgements
 
