@@ -341,12 +341,12 @@ such as backwards compatibility.
 
 ### **Unforgeability**
 
-One goal is security of hybrid signature schemes, in particular that EUF-CMA
+One goal is security of hybrid signature schemes. In particular, ideally EUF-CMA
 security is maintained as long as at least one of the ingredient schemes is
-EUF-CMA secure.  There might be, however, other goals in competition with this
-one, such as backward-compatibility, where the EUF-CMA security of the hybrid
+EUF-CMA secure without a prioritisation. We call this notion 'hybrid unforgability'. For example, the concatenation combiner in [HYBRIDSIG] is 'hybrid unforgable'. 
+There might be, however, other goals in competition with the notion of 'hybrid unforgability', such as backward-compatibility, where the EUF-CMA security of the hybrid
 signature relies solely on the security of one of the ingredient schemes instead
-of relying on both.
+of relying on both, e.g., the dual message combiner using nesting in [HYBRIDSIG].
 
 ### **Proof Composability**
 
