@@ -330,8 +330,8 @@ such as backwards compatibility.
 
 One goal is security of hybrid signature schemes. In particular, ideally EUF-CMA
 security is maintained as long as at least one of the ingredient schemes is
-EUF-CMA secure without a prioritisation. We call this notion 'hybrid unforgability'. For example, the concatenation combiner in [HYBRIDSIG] is 'hybrid unforgable'. 
-There might be, however, other goals in competition with with the notion of 'hybrid unforgability', such as backward-compatibility, where the EUF-CMA security of the hybrid
+EUF-CMA secure without a prioritisation. We call this notion 'hybrid unforgeability'. For example, the concatenation combiner in [HYBRIDSIG] is 'hybrid unforgeable'. 
+There might be, however, other goals in competition with with the notion of 'hybrid unforgeability', such as backward-compatibility, where the EUF-CMA security of the hybrid
 signature relies solely on the security of one of the ingredient schemes instead
 of relying on both, e.g., the dual message combiner using nesting in [HYBRIDSIG].
 
@@ -952,7 +952,7 @@ Backwards compatibility vs. SNS. There is an inherent mutual exclusion between b
 While WNS allows for a valid separation under leftover artifacts, SNS will
 ensure verification failure if a receiver attempts separation.
 
-Backwards compatibility vs. hybrid unforgability. Similarly, there is an inherent mutual exclusion between backwards comptaibility and hybrid unforgability as briefly mentioned above. Since the goal of backwards compatibility is usually to allow legacy systems without any software change to be able to process hybrid signatures, all differences between the legacy signature format and the hybrid signature format must allow to be ignored, including skipping verification of signatures in additional to the classical signature. As such security cannot rely on the security of all component signatures. 
+Backwards compatibility vs. hybrid unforgeability. Similarly, there is an inherent mutual exclusion between backwards comptaibility and hybrid unforgeability as briefly mentioned above. Since the goal of backwards compatibility is usually to allow legacy systems without any software change to be able to process hybrid signatures, all differences between the legacy signature format and the hybrid signature format must allow to be ignored, including skipping verification of signatures in additional to the classical signature. As such security cannot rely on the security of all component signatures. 
 
 Simultaneous verification vs. low need for approval. It seems that the more simultaneous verification is enforced by the hybrid design, the higher is the need-for-approval as simultaneous verification algorithms fuse (or 'entangle') the verification of the component algorithms such that verification operations from the different component schemes depend on each other in some way. 
 
