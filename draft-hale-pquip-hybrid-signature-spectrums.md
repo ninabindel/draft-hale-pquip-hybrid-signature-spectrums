@@ -326,12 +326,14 @@ following provides a summary of these goals, while also noting where security
 goals are in conflict, i.e., that achievement of one goal precludes another,
 such as backwards compatibility.
 
-### **Unforgeability**
+### **Hybrid Authentication**
 
-One goal is security of hybrid signature schemes. In particular, ideally EUF-CMA
-security is maintained as long as at least one of the ingredient schemes is
-EUF-CMA secure without a prioritisation. We call this notion 'hybrid unforgeability'. For example, the concatenation combiner in [HYBRIDSIG] is 'hybrid unforgeable'. 
-There might be, however, other goals in competition with with the notion of 'hybrid unforgeability', such as backward-compatibility, where the EUF-CMA security of the hybrid
+One goal of hybrid signature schemes is security. As defined in [I-D.ietf-pquip-pqt-hybrid-terminology], ideally a hybrid signature scheme can achieve 'hybrid authentication' which is the property that (cryptograpthic) authentication is achieved by the hybrid signature scheme provided that a least one component signature algorithm remains 'secure'. There might be, however, other goals in competition with this one, such as backward-compatibility. Hybrid authentication is an umbrella term that encompassess more specific concepts of hybrid signature security, such as 'hybrid unforgability' described next.
+
+#### **Hybrid Unforgeability**
+Ideally EUF-CMA security is maintained as long as at least one of the ingredient schemes is
+EUF-CMA secure without a prioritisation. We call this notion 'hybrid unforgeability'; it is a specific type of hybrid authentication. For example, the concatenation combiner in [HYBRIDSIG] is 'hybrid unforgeable'. 
+As mentioned above, this is incompatible with backward-compatibility, where the EUF-CMA security of the hybrid
 signature relies solely on the security of one of the ingredient schemes instead
 of relying on both, e.g., the dual message combiner using nesting in [HYBRIDSIG].
 
